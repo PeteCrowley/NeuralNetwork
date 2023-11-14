@@ -2,6 +2,7 @@
 #define LAYER_H
 
 #include <vector>
+#include "ActivationFunction.h"
 
 class Layer {
 private:
@@ -11,11 +12,11 @@ private:
     std::vector<double> biases;              // Stores the biases for each neuron
 
     static bool seeded;
-    double (*activationFunction)(double x);
+    ActivationFunction activationFunction;
 
 public:
     Layer(int num_neurons, int num_neuron);     // Constructor
-    Layer(int num_neurons, int num_neuron, double (*activationFunction)(double x));
+    Layer(int num_neurons, int num_neuron, ActivationFunction activationFunction);
     std::vector<double> calculateOutputs(std::vector<double> inputs);  // Calculates the outputs of the layer
     std::string toString();
     int getNumInputs();

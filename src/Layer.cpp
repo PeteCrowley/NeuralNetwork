@@ -2,15 +2,15 @@
 #include <vector>
 #include <random>
 #include "Layer.h"
+#include "ActivationFunction.h"
 
 using namespace std;
 
 bool Layer::seeded = false;
 
+Layer::Layer(int num_inputs, int num_outputs) : Layer(num_inputs, num_outputs, identity){} // default activation function is the identity function (f(x) = x
 
-Layer::Layer(int num_inputs, int num_outputs) : Layer(num_inputs, num_outputs, [](double x){return x;}){} // default activation function is the identity function (f(x) = x
-
-Layer::Layer(int num_inputs, int num_outputs, double(*activationFunction)(double x)){
+Layer::Layer(int num_inputs, int num_outputs, ActivationFunction activationFunction){
     this-> num_inputs = num_inputs;             
     this-> num_outputs = num_outputs;
     this-> activationFunction = activationFunction;
@@ -51,7 +51,7 @@ vector<double> Layer::calculateOutputs(vector<double> inputs){
         outputs.insert(outputs.end(), output);      // add the output to our vector
     }
     for(int i = 0; i < outputs.size(); i++){
-        outputs[i] = activationFunction(outputs[i]);
+        outputs[i] = activationFunction.activationFunction(outputs[i]);
     }
     return outputs;
 }
