@@ -1,11 +1,22 @@
 #ifndef ACTIVATION_FUNCTION_H
 #define ACTIVATION_FUNCTION_H
 
-#include <vector>
-
+/**
+ * Class for an activation function
+*/
 class ActivationFunction {
 public:
-    double (*activationFunction)(double x);
+    /**
+     * Returns the activation of a certain value
+     * @param x: The value to be activated
+     * @return: The activated value
+    */
+    double (*activation)(double x);
+    /**
+     * Returns the derivative of the activation function for a certain value
+     * @param x: The value to be activated
+     * @return: The derivative of the activated value
+    */
     double (*derivative)(double x);
     ActivationFunction();
     ActivationFunction(double (*activationFunction)(double x), double (*derivative)(double x));

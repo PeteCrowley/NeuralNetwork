@@ -1,14 +1,23 @@
 #include "ActivationFunction.h"
+#include <math.h>
 
+/**
+ * Default constructor for ActivationFunction
+*/
 ActivationFunction::ActivationFunction()
 {
-    this->activationFunction = nullptr;
+    this->activation = nullptr;
     this->derivative = nullptr;
 }
 
-ActivationFunction::ActivationFunction(double (*activationFunction)(double x), double (*derivative)(double x))
+/**
+ * Constructor for ActivationFunction
+ * @param activation: The activation function
+ * @param derivative: The derivative of the activation function
+*/
+ActivationFunction::ActivationFunction(double (*activation)(double x), double (*derivative)(double x))
 {
-    this->activationFunction = activationFunction;
+    this->activation = activation;
     this->derivative = derivative;
 }
 
@@ -24,11 +33,11 @@ ActivationFunction sigmoid = ActivationFunction(sig, sigDeriv);
 
 
 double tanHDec(double x){
-    return (exp(x) - exp(-x)) / (exp(x) + exp(-x));
+    return tanh(x);
 }
 
 double tanHDeriv(double x){
-    return 1 - tanHDec(x) * tanHDec(x);
+    return 1 - tanh(x) * tanh(x);
 }
 
 ActivationFunction tanH = ActivationFunction(tanHDec, tanHDeriv);

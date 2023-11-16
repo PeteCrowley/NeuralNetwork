@@ -7,10 +7,21 @@
 #include <random>
 #include "Network.h"
 
-
+/**
+ * Constructor
+*/
 VisualizeClassification::VisualizeClassification(int (*eval_function)(double, double), Network network) : VisualizeClassification(eval_function, network, 1000, 300) {
 }   
 
+/**
+ * Constructor for class VisualizeClassification
+ * @param eval_function: function to cassify points
+ * @param network: network learning classify points
+ * @param num_points: number of data points to create and classify
+ * @param screen_size: size of the screen to draw to
+ * @param max_value: maximum value of x and y for data points
+ * 
+*/
 VisualizeClassification::VisualizeClassification(int (*eval_function)(double, double), Network network, int num_points, int screen_size, double max_value)
     : window(sf::VideoMode(screen_size, screen_size), "Classification Visualization") {
     this->num_points = num_points;
@@ -25,12 +36,18 @@ VisualizeClassification::VisualizeClassification(int (*eval_function)(double, do
     VisualizeClassification::initializeTransparentColors();
 }
 
+/**
+ * Initializes the transparent colors to be used later
+*/
 void VisualizeClassification:: initializeTransparentColors(){
     for(int i = 0; i < 8; i++){
         transparentColors[i] = sf::Color(colors[i].r, colors[i].g, colors[i].b, 100);
     }
 }
 
+/**
+ * Runs the main loop of the visualization
+*/
 void VisualizeClassification::runMainLoop(){
     window.clear();
     VisualizeClassification::classifyPointsTransparently();
@@ -48,22 +65,26 @@ void VisualizeClassification::runMainLoop(){
                 
         }
         window.clear();
-        network.learnWithBatchSize(inputs, vectorizedOutputs, 16);
+        network.learnWithBatchSize(inputs, vectorizedOutputs);
         VisualizeClassification::classifyPointsTransparently();
         VisualizeClassification::drawPoints();
         VisualizeClassification::showLossAndEpochs();
         window.display();
-        
-        // VisualizeClassification::visualizeBatchLearning();
     }
 }
 
+/**
+ * Generates random data points for the class
+*/
 void VisualizeClassification::generateRandomData(){
     for(int i = 0; i < num_points; i++){
         inputs.push_back(std::vector<double>{(double)rand() / RAND_MAX * max_value, (double)rand() / RAND_MAX * max_value});
     }
 }
 
+/**
+ * Shows the loss and number of epochs on the screen
+*/
 void VisualizeClassification::showLossAndEpochs(){
     sf::Font font;
     if(!font.loadFromFile("../fonts/calibri.ttf")){
@@ -74,8 +95,9 @@ void VisualizeClassification::showLossAndEpochs(){
     
     sf::Text loss;
     loss.setFont(font);
-    loss.setString("Loss: " + std::to_string(network.averageCost(network.getOutputs(inputs), vectorizedOutputs))
-                    + "\nEpoch: " + std::to_string(network.getEpoch()));
+    loss.setString("Epoch: " + std::to_string(network.getEpoch())
+                    + "\nLoss: " + std::to_string(network.averageCost(network.getOutputs(inputs), vectorizedOutputs))
+                    + "\nAccuracy: " + std::to_string(network.accuracy(inputs, outputs)));
     loss.setCharacterSize(15);
     loss.setFillColor(sf::Color::White);
     loss.setPosition(10, 10);
@@ -84,33 +106,9 @@ void VisualizeClassification::showLossAndEpochs(){
 
 }
 
-void VisualizeClassification::visualizeBatchLearning(){
-    std::vector<int> indexes;
-    indexes.reserve(inputs.size());
-    for (int i = 0; i < inputs.size(); ++i)
-        indexes.push_back(i);
-    // Obtain a random seed
-    std::random_device rd;
-    // Create a random number generator engine
-    std::mt19937 rng(rd());
-    // Shuffle the vector using std::shuffle
-    std::shuffle(indexes.begin(), indexes.end(), rng);
-
-    for(int i = 0; i < inputs.size() - network.getBatchSize(); i += network.getBatchSize()){
-        vector<vector<double>> batch_inputs;
-        vector<vector<double>> batch_outputs;
-        for(int j = 0; j < network.getBatchSize(); j++){
-            batch_inputs.push_back(inputs[indexes[i + j]]);
-            batch_outputs.push_back(vectorizedOutputs[indexes[i + j]]);
-        }
-        network.learn(batch_inputs, batch_outputs);
-        window.clear();
-        VisualizeClassification::classifyPointsTransparently();
-        VisualizeClassification::drawPoints();
-        window.display();
-    }
-}
-
+/**
+ * Generates the outputs for the data points
+*/
 void VisualizeClassification::generateOutputs(){
     for(int i = 0; i < num_points; i++){
         int output = this->eval_function(inputs[i][0], inputs[i][1]);
@@ -119,6 +117,9 @@ void VisualizeClassification::generateOutputs(){
     }
 }
 
+/**
+ * Classifies the points with a transparent mask over the screen
+*/
 void VisualizeClassification::classifyPointsTransparently(){
     sf::Image graph;
     graph.create(screen_size_x, screen_size_y, sf::Color::Transparent);
@@ -136,6 +137,9 @@ void VisualizeClassification::classifyPointsTransparently(){
     window.draw(sprite);
 }
 
+/**
+ * Draws the points to the screen
+*/
 void VisualizeClassification::drawPoints(){
     for (int i = 0; i < num_points; i++){
         sf::CircleShape point(1);

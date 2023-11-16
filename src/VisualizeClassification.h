@@ -4,6 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include "Network.h"
 
+/**
+ * This is a class used to visualize the process of neural networks learning to classify points
+*/
 class VisualizeClassification {
 private:
     int num_points;             // number of data points
@@ -29,7 +32,6 @@ public:
     VisualizeClassification(int (*eval_function)(double, double), Network network, int num_points, int screen_size, double max_value = 10);
     void initializeTransparentColors();
     void generateRandomData();
-    void visualizeBatchLearning();
     void generateOutputs();
     void classifyPointsTransparently();
     void drawPoints();
