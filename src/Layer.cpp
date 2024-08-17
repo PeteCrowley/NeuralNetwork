@@ -60,18 +60,19 @@ Layer::Layer(int num_inputs, int num_outputs, ActivationFunction activationFunct
 vector<float> Layer::calculateOutputs(vector<float> inputs){
     previousInputs = inputs;
 
-    vector<float> outputs;
+    vector<float> outputs(num_outputs, 0.0f);
 
     // calculate each output one at a time
     for (size_t outputIndex = 0; outputIndex < num_outputs; outputIndex++)
     {
         float output = biases[outputIndex];        // start with the bias
         // loop through each input and add the weighted input
+
         for (size_t inputIndex = 0; inputIndex < num_inputs; inputIndex++)
         {
             output += inputs[inputIndex] * weights[outputIndex][inputIndex];
         }
-        outputs.push_back(output);      // add the output to our vector
+        outputs[outputIndex] = output;      // add the output to our vector
     }
     previousOutputs = outputs;
     for(size_t i = 0; i < outputs.size(); i++){

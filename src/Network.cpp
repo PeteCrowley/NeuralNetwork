@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
+#include <omp.h>
 
 using namespace std;
 
@@ -79,9 +80,10 @@ vector<float> Network:: getOutput(vector<float> inputs){
  * @return: The outputs of the network
 */
 vector<vector<float>> Network:: getOutputs(vector<vector<float>> inputs){
-    vector<vector<float>> outputs;
+    vector<vector<float>> outputs(inputs.size());
+    // #pragma omp parallel for
     for(size_t i = 0; i < inputs.size(); i++){
-        outputs.push_back(this->getOutput(inputs[i]));
+        outputs[i] = this->getOutput(inputs[i]);
     }
     return outputs;
 }
@@ -129,6 +131,7 @@ float Network::cost(std::vector<float> output, vector<float> expected_output){
 */
 float Network:: averageCost(vector<vector<float>> outputs, vector<vector<float>> expected_outputs){
     float total_cost = 0;
+    // #pragma omp parallel for reduction(+:total_cost)
     for (size_t i = 0; i < expected_outputs.size(); i++){
         total_cost += this->cost(outputs[i], expected_outputs[i]);
     }
@@ -144,6 +147,7 @@ float Network:: averageCost(vector<vector<float>> outputs, vector<vector<float>>
 float Network::accuracy(vector<vector<float>> inputs, vector<int> expected_integer_outputs)
 {
     int total_correct = 0;
+    // #pragma omp parallel for reduction(+:total_correct)
     for(size_t i = 0; i < inputs.size(); i++){
         total_correct += this->classify(inputs[i]) == expected_integer_outputs[i];   
     }
@@ -172,6 +176,7 @@ float Network::accuracy(vector<vector<float>> inputs, vector<vector<float>> expe
 */
 void Network::quickLearn(vector<vector<float>> inputs, vector<vector<float>> expected_output)
 {
+    // #pragma omp parallel for
     for(size_t i = 0; i < inputs.size(); i++){
         this->updateDerivatives(inputs[i], expected_output[i]);
     }
