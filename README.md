@@ -1,5 +1,5 @@
 # Neural Network
-Coding a neural network from scratch in C++. 
+This project is a neural network coded from scratch in C++. It visualizes the learning process of a classifier by generating `num_points` points and classifying them best on predefined evaluation functions (i.e 3 linear sections, 4 squares or 4 concentric circles). Then, each epoch, as the network learns, it colors the screen based on which pixels belong to which class. See the examples below for more detail.
 
 ## Required Packages
 1. SFML
