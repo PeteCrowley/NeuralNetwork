@@ -1,0 +1,92 @@
+\doxysection{Cost\+Function Class Reference}
+\hypertarget{class_cost_function}{}\label{class_cost_function}\index{CostFunction@{CostFunction}}
+
+
+Class for a cost function.  
+
+
+
+
+{\ttfamily \#include $<$Cost\+Function.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_cost_function_aadc7232e869e752fc4c6db78f9ad8b12}\label{class_cost_function_aadc7232e869e752fc4c6db78f9ad8b12} 
+{\bfseries Cost\+Function} ()
+\begin{DoxyCompactList}\small\item\em Default constructor for \doxylink{class_cost_function}{Cost\+Function}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_cost_function_aa0376541980921a57638ccb084b49aff}{Cost\+Function}} (float(\texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_cost_function_a6ff42a939bd74f52f050e789e20fc00b}{cost}})(float output, float expected\+Output), float(\texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_cost_function_a6e13e0381eee122e6ab4b9e73096f9dc}{derivative}})(float output, float expected\+Output))
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_cost_function}{Cost\+Function}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_cost_function_a6ff42a939bd74f52f050e789e20fc00b}{cost}} )(float output, float expected\+Output)
+\begin{DoxyCompactList}\small\item\em Returns the cost of a certain output and expected output. \end{DoxyCompactList}\item 
+float(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_cost_function_a6e13e0381eee122e6ab4b9e73096f9dc}{derivative}} )(float output, float expected\+Output)
+\begin{DoxyCompactList}\small\item\em Returns the derivative of the cost function for a certain output and expected output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for a cost function. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_cost_function_aa0376541980921a57638ccb084b49aff}\index{CostFunction@{CostFunction}!CostFunction@{CostFunction}}
+\index{CostFunction@{CostFunction}!CostFunction@{CostFunction}}
+\doxysubsubsection{\texorpdfstring{CostFunction()}{CostFunction()}}
+{\footnotesize\ttfamily \label{class_cost_function_aa0376541980921a57638ccb084b49aff} 
+Cost\+Function\+::\+Cost\+Function (\begin{DoxyParamCaption}\item[{float(\texorpdfstring{$\ast$}{*}}]{cost~}{)(float output, float expected\+Output), }\item[{float(\texorpdfstring{$\ast$}{*}}]{derivative~}{)(float output, float expected\+Output)}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_cost_function}{Cost\+Function}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cost} & The cost function \\
+\hline
+{\em derivative} & The derivative of the cost function \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_cost_function_a6ff42a939bd74f52f050e789e20fc00b}\index{CostFunction@{CostFunction}!cost@{cost}}
+\index{cost@{cost}!CostFunction@{CostFunction}}
+\doxysubsubsection{\texorpdfstring{cost}{cost}}
+{\footnotesize\ttfamily \label{class_cost_function_a6ff42a939bd74f52f050e789e20fc00b} 
+float(\texorpdfstring{$\ast$}{*} Cost\+Function\+::cost) (float output, float expected\+Output)}
+
+
+
+Returns the cost of a certain output and expected output. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & The output of the network \\
+\hline
+{\em expected\+Output} & The expected output of the network \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_cost_function_a6e13e0381eee122e6ab4b9e73096f9dc}\index{CostFunction@{CostFunction}!derivative@{derivative}}
+\index{derivative@{derivative}!CostFunction@{CostFunction}}
+\doxysubsubsection{\texorpdfstring{derivative}{derivative}}
+{\footnotesize\ttfamily \label{class_cost_function_a6e13e0381eee122e6ab4b9e73096f9dc} 
+float(\texorpdfstring{$\ast$}{*} Cost\+Function\+::derivative) (float output, float expected\+Output)}
+
+
+
+Returns the derivative of the cost function for a certain output and expected output. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & The output of the network \\
+\hline
+{\em expected\+Output} & The expected output of the network \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/Cost\+Function.\+h\item 
+src/Cost\+Function.\+cpp\end{DoxyCompactItemize}

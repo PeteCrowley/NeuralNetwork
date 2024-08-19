@@ -1,0 +1,94 @@
+\doxysection{Activation\+Function Class Reference}
+\hypertarget{class_activation_function}{}\label{class_activation_function}\index{ActivationFunction@{ActivationFunction}}
+
+
+Class for an activation function.  
+
+
+
+
+{\ttfamily \#include $<$Activation\+Function.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_activation_function_ae3f3ad8ca0a4558862860b3e15570248}\label{class_activation_function_ae3f3ad8ca0a4558862860b3e15570248} 
+{\bfseries Activation\+Function} ()
+\begin{DoxyCompactList}\small\item\em Default constructor for \doxylink{class_activation_function}{Activation\+Function}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_activation_function_aa989a79556b71a11b1f5c00e79e0922e}{Activation\+Function}} (float(\texorpdfstring{$\ast$}{*}activation\+Function)(float x), float(\texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_activation_function_a2611932da7311a540612a97e2d2e94d6}{derivative}})(float x))
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_activation_function}{Activation\+Function}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_activation_function_ac13b0e8e481537ea6154932fac46c9d4}{activation}} )(float x)
+\begin{DoxyCompactList}\small\item\em Returns the activation of a certain value. \end{DoxyCompactList}\item 
+float(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_activation_function_a2611932da7311a540612a97e2d2e94d6}{derivative}} )(float x)
+\begin{DoxyCompactList}\small\item\em Returns the derivative of the activation function for a certain value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for an activation function. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_activation_function_aa989a79556b71a11b1f5c00e79e0922e}\index{ActivationFunction@{ActivationFunction}!ActivationFunction@{ActivationFunction}}
+\index{ActivationFunction@{ActivationFunction}!ActivationFunction@{ActivationFunction}}
+\doxysubsubsection{\texorpdfstring{ActivationFunction()}{ActivationFunction()}}
+{\footnotesize\ttfamily \label{class_activation_function_aa989a79556b71a11b1f5c00e79e0922e} 
+Activation\+Function\+::\+Activation\+Function (\begin{DoxyParamCaption}\item[{float(\texorpdfstring{$\ast$}{*}}]{activation~}{)(float x), }\item[{float(\texorpdfstring{$\ast$}{*}}]{derivative~}{)(float x)}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_activation_function}{Activation\+Function}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em activation} & The activation function \\
+\hline
+{\em derivative} & The derivative of the activation function \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_activation_function_ac13b0e8e481537ea6154932fac46c9d4}\index{ActivationFunction@{ActivationFunction}!activation@{activation}}
+\index{activation@{activation}!ActivationFunction@{ActivationFunction}}
+\doxysubsubsection{\texorpdfstring{activation}{activation}}
+{\footnotesize\ttfamily \label{class_activation_function_ac13b0e8e481537ea6154932fac46c9d4} 
+float(\texorpdfstring{$\ast$}{*} Activation\+Function\+::activation) (float x)}
+
+
+
+Returns the activation of a certain value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to be activated \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The activated value 
+\end{DoxyReturn}
+\Hypertarget{class_activation_function_a2611932da7311a540612a97e2d2e94d6}\index{ActivationFunction@{ActivationFunction}!derivative@{derivative}}
+\index{derivative@{derivative}!ActivationFunction@{ActivationFunction}}
+\doxysubsubsection{\texorpdfstring{derivative}{derivative}}
+{\footnotesize\ttfamily \label{class_activation_function_a2611932da7311a540612a97e2d2e94d6} 
+float(\texorpdfstring{$\ast$}{*} Activation\+Function\+::derivative) (float x)}
+
+
+
+Returns the derivative of the activation function for a certain value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to be activated \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The derivative of the activated value 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/Activation\+Function.\+h\item 
+src/Activation\+Function.\+cpp\end{DoxyCompactItemize}

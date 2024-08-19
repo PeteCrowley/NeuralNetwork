@@ -1,0 +1,57 @@
+\doxysection{Layer.\+h}
+\hypertarget{_layer_8h_source}{}\label{_layer_8h_source}\index{include/Layer.h@{include/Layer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ LAYER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ LAYER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}ActivationFunction.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}CostFunction.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_layer}{Layer}}\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ num\_inputs;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ inputs\ to\ the\ layer}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ num\_outputs;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ outputs\ from\ the\ layer}}
+\DoxyCodeLine{00019\ \ \ \ \ vector<vector<float>>\ weights;\ \ \ \ \ \textcolor{comment}{//\ Stores\ the\ weights\ with\ indexes\ [output][input]}}
+\DoxyCodeLine{00020\ \ \ \ \ vector<float>\ biases;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Stores\ the\ biases\ for\ each\ neuron}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ seeded;}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{class_activation_function}{ActivationFunction}}\ activationFunction;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Variables\ for\ backpropagation}}
+\DoxyCodeLine{00027\ \ \ \ \ vector<float>\ previousInputs;}
+\DoxyCodeLine{00028\ \ \ \ \ vector<float>\ previousOutputs;}
+\DoxyCodeLine{00029\ \ \ \ \ vector<float>\ previousActivations;}
+\DoxyCodeLine{00030\ \ \ \ \ vector<float>\ derivatvesCostRespectToOutputs;}
+\DoxyCodeLine{00031\ \ \ \ \ vector<vector<float>>\ weightDerivatives;}
+\DoxyCodeLine{00032\ \ \ \ \ vector<float>\ biasDerivatives;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_layer_a2a332403d0c5dcb374064423f15df716}{Layer}}(\textcolor{keywordtype}{int}\ num\_neurons,\ \textcolor{keywordtype}{int}\ num\_neuron);\ \ \ \ \ \textcolor{comment}{//\ Constructor}}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{class_layer_a2a332403d0c5dcb374064423f15df716}{Layer}}(\textcolor{keywordtype}{int}\ num\_neurons,\ \textcolor{keywordtype}{int}\ num\_neuron,\ \mbox{\hyperlink{class_activation_function}{ActivationFunction}}\ activationFunction);}
+\DoxyCodeLine{00038\ \ \ \ \ vector<float>\ \mbox{\hyperlink{class_layer_a6872ac133c2a0dd1d1900f1d3ba201fb}{calculateOutputs}}(vector<float>\ inputs);\ \ \textcolor{comment}{//\ Calculates\ the\ outputs\ of\ the\ layer}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_layer_a2ed19581f2251ce5f8bc08584cd7e19f}{toString}}();}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_layer_a8ad4d21104307850002af86e5c5a82eb}{getNumInputs}}();}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_layer_a776a027145dd7d294da9a25534fdc49d}{getNumOutputs}}();}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_layer_aff1b52025cfa41f7ca74ed0a746b3152}{getWeight}}(\textcolor{keywordtype}{int}\ neuronIndex,\ \textcolor{keywordtype}{int}\ inputIndex);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_layer_addbcb8b6fc2f9ce3d943835e2260e210}{getBias}}(\textcolor{keywordtype}{int}\ neuronIndex);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_layer_a82150148282b1056daa67dee1d2c0df0}{setNeuronWeight}}(\textcolor{keywordtype}{int}\ neuronIndex,\ \textcolor{keywordtype}{int}\ inputIndex,\ \textcolor{keywordtype}{float}\ weight);}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_layer_ab16e8af90d373ef8328b246bad815878}{setNeuronBias}}(\textcolor{keywordtype}{int}\ neuronIndex,\ \textcolor{keywordtype}{float}\ bias);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_layer_a52f3f32eada5f08b2430c458bae71dce}{calculateOutputLayerPartialDerivatives}}(\mbox{\hyperlink{class_cost_function}{CostFunction}}\ costFunction,\ vector<float>\ expectedOutputs);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_layer_a795505dc9418b447ea21a32fdd3f6d82}{calculateHiddenLayerPartialDerivatives}}(\mbox{\hyperlink{class_layer}{Layer}}\ nextLayer);}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_layer_ad5c23f641952e7aed08a3a774dff4b40}{calculateBiasPartialDerivatives}}(\mbox{\hyperlink{class_layer}{Layer}}\ nextLayer);}
+\DoxyCodeLine{00049\ \ \ \ \ vector<vector<float>>\ getWeightDerivatives();}
+\DoxyCodeLine{00050\ \ \ \ \ vector<float>\ getBiasDerivatives();}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_layer_aed20654bd147606b704ab345f3e57675}{resetDerivatives}}();}
+\DoxyCodeLine{00052\ \};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ LAYER\_H}}
+
+\end{DoxyCode}

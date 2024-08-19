@@ -129,8 +129,8 @@ int EvaluationFunctions::tanh_function(float x, float y){
  * Map of evaluation function names to function pointers
  */
 const std::map<std::string, EvalFunctionPtr> EvaluationFunctions::function_map = {
-    {"linear", EvaluationFunctions::three_linear_sections},
-    {"4_squares", EvaluationFunctions::four_squares},
+    {"3linear", EvaluationFunctions::three_linear_sections},
+    {"4squares", EvaluationFunctions::four_squares},
     {"cubic", EvaluationFunctions::cubic_function},
     {"quadratic", EvaluationFunctions::quadratic_function},
     {"circle", EvaluationFunctions::circle_function},

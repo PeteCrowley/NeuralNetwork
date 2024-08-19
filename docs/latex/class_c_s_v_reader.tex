@@ -1,0 +1,104 @@
+\doxysection{CSVReader Class Reference}
+\hypertarget{class_c_s_v_reader}{}\label{class_c_s_v_reader}\index{CSVReader@{CSVReader}}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::vector$<$ std\+::vector$<$ float $>$ $>$ \mbox{\hyperlink{class_c_s_v_reader_a6c4526c7dc6a39ef6d8673f00549004b}{readfloat\+Rows}} (std\+::string file\+Name, int start\+Column, int end\+Column, int start\+Row, int end\+Row)
+\begin{DoxyCompactList}\small\item\em Reads a CSV file and returns a vector of vectors of floats. \end{DoxyCompactList}\item 
+static std\+::vector$<$ float $>$ \mbox{\hyperlink{class_c_s_v_reader_a7ce25e53d03d22acc806aa1d121cefcc}{readfloat\+Column}} (std\+::string file\+Name, int column\+Index, int start\+Row, int end\+Row)
+\begin{DoxyCompactList}\small\item\em Reads a CSV file and returns a vector of ints. \end{DoxyCompactList}\item 
+static std\+::vector$<$ std\+::vector$<$ float $>$ $>$ \mbox{\hyperlink{class_c_s_v_reader_adba578488b67ead43f7258f096608e6e}{normalize}} (std\+::vector$<$ std\+::vector$<$ float $>$ $>$ data, float max)
+\begin{DoxyCompactList}\small\item\em Normalizes a vector of vectors of floats. \end{DoxyCompactList}\item 
+static std\+::vector$<$ std\+::vector$<$ float $>$ $>$ \mbox{\hyperlink{class_c_s_v_reader_a2bfdef1470463bf3f3b5455da7ba794b}{vectorize\+Outputs}} (std\+::vector$<$ float $>$ outputs, int num\+Classes)
+\begin{DoxyCompactList}\small\item\em Vectorizes a vector of ints. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_c_s_v_reader_adba578488b67ead43f7258f096608e6e}\index{CSVReader@{CSVReader}!normalize@{normalize}}
+\index{normalize@{normalize}!CSVReader@{CSVReader}}
+\doxysubsubsection{\texorpdfstring{normalize()}{normalize()}}
+{\footnotesize\ttfamily \label{class_c_s_v_reader_adba578488b67ead43f7258f096608e6e} 
+vector$<$ vector$<$ float $>$ $>$ CSVReader\+::normalize (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ float $>$ $>$}]{data}{, }\item[{float}]{max}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Normalizes a vector of vectors of floats. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data to normalize \\
+\hline
+{\em max} & The maximum value to normalize to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The normalized data 
+\end{DoxyReturn}
+\Hypertarget{class_c_s_v_reader_a7ce25e53d03d22acc806aa1d121cefcc}\index{CSVReader@{CSVReader}!readfloatColumn@{readfloatColumn}}
+\index{readfloatColumn@{readfloatColumn}!CSVReader@{CSVReader}}
+\doxysubsubsection{\texorpdfstring{readfloatColumn()}{readfloatColumn()}}
+{\footnotesize\ttfamily \label{class_c_s_v_reader_a7ce25e53d03d22acc806aa1d121cefcc} 
+vector$<$ float $>$ CSVReader\+::readfloat\+Column (\begin{DoxyParamCaption}\item[{std\+::string}]{file\+Name}{, }\item[{int}]{column\+Index}{, }\item[{int}]{start\+Row}{, }\item[{int}]{end\+Row}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Reads a CSV file and returns a vector of ints. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & The name of the file to read \\
+\hline
+{\em column\+Index} & The column to read from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: A vector of ints 
+\end{DoxyReturn}
+\Hypertarget{class_c_s_v_reader_a6c4526c7dc6a39ef6d8673f00549004b}\index{CSVReader@{CSVReader}!readfloatRows@{readfloatRows}}
+\index{readfloatRows@{readfloatRows}!CSVReader@{CSVReader}}
+\doxysubsubsection{\texorpdfstring{readfloatRows()}{readfloatRows()}}
+{\footnotesize\ttfamily \label{class_c_s_v_reader_a6c4526c7dc6a39ef6d8673f00549004b} 
+vector$<$ vector$<$ float $>$ $>$ CSVReader\+::readfloat\+Rows (\begin{DoxyParamCaption}\item[{std\+::string}]{file\+Name}{, }\item[{int}]{start\+Column}{, }\item[{int}]{end\+Column}{, }\item[{int}]{start\+Row}{, }\item[{int}]{end\+Row}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Reads a CSV file and returns a vector of vectors of floats. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & The name of the file to read \\
+\hline
+{\em start\+Column} & The column to start reading from \\
+\hline
+{\em end\+Column} & The column to stop reading at \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: A vector of vectors of floats 
+\end{DoxyReturn}
+\Hypertarget{class_c_s_v_reader_a2bfdef1470463bf3f3b5455da7ba794b}\index{CSVReader@{CSVReader}!vectorizeOutputs@{vectorizeOutputs}}
+\index{vectorizeOutputs@{vectorizeOutputs}!CSVReader@{CSVReader}}
+\doxysubsubsection{\texorpdfstring{vectorizeOutputs()}{vectorizeOutputs()}}
+{\footnotesize\ttfamily \label{class_c_s_v_reader_a2bfdef1470463bf3f3b5455da7ba794b} 
+vector$<$ vector$<$ float $>$ $>$ CSVReader\+::vectorize\+Outputs (\begin{DoxyParamCaption}\item[{std\+::vector$<$ float $>$}]{outputs}{, }\item[{int}]{num\+Classes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Vectorizes a vector of ints. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em outputs} & The outputs to vectorize \\
+\hline
+{\em num\+Classes} & The number of classes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The vectorized outputs 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/CSVReader.\+h\item 
+src/CSVReader.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,278 @@
+\doxysection{Layer Class Reference}
+\hypertarget{class_layer}{}\label{class_layer}\index{Layer@{Layer}}
+
+
+Class for a layer in a neural network.  
+
+
+
+
+{\ttfamily \#include $<$Layer.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_layer_a2a332403d0c5dcb374064423f15df716}{Layer}} (int num\+\_\+neurons, int num\+\_\+neuron)
+\begin{DoxyCompactList}\small\item\em Constructor for class layer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_layer_a5951c87ec8a968b207796dd9a2a842c6}{Layer}} (int num\+\_\+neurons, int num\+\_\+neuron, \mbox{\hyperlink{class_activation_function}{Activation\+Function}} activation\+Function)
+\begin{DoxyCompactList}\small\item\em Constructor for class layer. \end{DoxyCompactList}\item 
+vector$<$ float $>$ \mbox{\hyperlink{class_layer_a6872ac133c2a0dd1d1900f1d3ba201fb}{calculate\+Outputs}} (vector$<$ float $>$ inputs)
+\begin{DoxyCompactList}\small\item\em Calculates the outputs of the layer and stores the inputs, outputs, and activations. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_layer_a2ed19581f2251ce5f8bc08584cd7e19f}{to\+String}} ()
+\begin{DoxyCompactList}\small\item\em Returns a string representation of the layer. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_layer_a8ad4d21104307850002af86e5c5a82eb}{get\+Num\+Inputs}} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of inputs to the layer. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_layer_a776a027145dd7d294da9a25534fdc49d}{get\+Num\+Outputs}} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of outputs from the layer. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_layer_aff1b52025cfa41f7ca74ed0a746b3152}{get\+Weight}} (int neuron\+Index, int input\+Index)
+\begin{DoxyCompactList}\small\item\em Returns the weight of a neuron. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_layer_addbcb8b6fc2f9ce3d943835e2260e210}{get\+Bias}} (int neuron\+Index)
+\begin{DoxyCompactList}\small\item\em Returns the bias of a neuron. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_layer_a82150148282b1056daa67dee1d2c0df0}{set\+Neuron\+Weight}} (int neuron\+Index, int input\+Index, float weight)
+\begin{DoxyCompactList}\small\item\em Sets the weight of a neuron at a specified index. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_layer_ab16e8af90d373ef8328b246bad815878}{set\+Neuron\+Bias}} (int neuron\+Index, float bias)
+\begin{DoxyCompactList}\small\item\em Sets the bias of a neuron at a specified index. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_layer_a52f3f32eada5f08b2430c458bae71dce}{calculate\+Output\+Layer\+Partial\+Derivatives}} (\mbox{\hyperlink{class_cost_function}{Cost\+Function}} cost\+Function, vector$<$ float $>$ expected\+Outputs)
+\begin{DoxyCompactList}\small\item\em Calculates the partial derivatives of the weights and biases if this is an output Stores the weight derivatives in weight\+Derivatives and derivatves needed for future backpropogation in derivatves\+Cost\+Respect\+To\+Outputs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_layer_a795505dc9418b447ea21a32fdd3f6d82}{calculate\+Hidden\+Layer\+Partial\+Derivatives}} (\mbox{\hyperlink{class_layer}{Layer}} next\+Layer)
+\begin{DoxyCompactList}\small\item\em Calculates the partial derivatives of the weights and biases if this is a hidden layer Stores the weight derivatives in weight\+Derivatives and derivatves needed for future backpropogation in derivatves\+Cost\+Respect\+To\+Outputs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_layer_ad5c23f641952e7aed08a3a774dff4b40}{calculate\+Bias\+Partial\+Derivatives}} (\mbox{\hyperlink{class_layer}{Layer}} next\+Layer)
+\begin{DoxyCompactList}\small\item\em Calculates the partial derivatives of the biases Stores the bias derivatives in bias\+Derivatives. \end{DoxyCompactList}\item 
+\Hypertarget{class_layer_a14ccb5ba272a8ae13ea3b65ed1ac4f45}\label{class_layer_a14ccb5ba272a8ae13ea3b65ed1ac4f45} 
+vector$<$ vector$<$ float $>$ $>$ {\bfseries get\+Weight\+Derivatives} ()
+\item 
+\Hypertarget{class_layer_a2754659a59facc84dc70c4f49cfcb7bd}\label{class_layer_a2754659a59facc84dc70c4f49cfcb7bd} 
+vector$<$ float $>$ {\bfseries get\+Bias\+Derivatives} ()
+\item 
+\Hypertarget{class_layer_aed20654bd147606b704ab345f3e57675}\label{class_layer_aed20654bd147606b704ab345f3e57675} 
+void {\bfseries reset\+Derivatives} ()
+\begin{DoxyCompactList}\small\item\em Resets the derivatives of the weights and biases to 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for a layer in a neural network. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_layer_a2a332403d0c5dcb374064423f15df716}\index{Layer@{Layer}!Layer@{Layer}}
+\index{Layer@{Layer}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{Layer()}{Layer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_layer_a2a332403d0c5dcb374064423f15df716} 
+Layer\+::\+Layer (\begin{DoxyParamCaption}\item[{int}]{num\+\_\+inputs}{, }\item[{int}]{num\+\_\+outputs}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for class layer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+inputs} & The number of inputs to the layer \\
+\hline
+{\em num\+\_\+outputs} & The number of outputs from the layer Will use the identity activation function \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_layer_a5951c87ec8a968b207796dd9a2a842c6}\index{Layer@{Layer}!Layer@{Layer}}
+\index{Layer@{Layer}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{Layer()}{Layer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_layer_a5951c87ec8a968b207796dd9a2a842c6} 
+Layer\+::\+Layer (\begin{DoxyParamCaption}\item[{int}]{num\+\_\+inputs}{, }\item[{int}]{num\+\_\+outputs}{, }\item[{\mbox{\hyperlink{class_activation_function}{Activation\+Function}}}]{activation\+Function}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for class layer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+inputs} & The number of inputs to the layer \\
+\hline
+{\em num\+\_\+outputs} & The number of outputs from the layer \\
+\hline
+{\em activation\+Function} & The activation function of the layer \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_layer_ad5c23f641952e7aed08a3a774dff4b40}\index{Layer@{Layer}!calculateBiasPartialDerivatives@{calculateBiasPartialDerivatives}}
+\index{calculateBiasPartialDerivatives@{calculateBiasPartialDerivatives}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{calculateBiasPartialDerivatives()}{calculateBiasPartialDerivatives()}}
+{\footnotesize\ttfamily \label{class_layer_ad5c23f641952e7aed08a3a774dff4b40} 
+void Layer\+::calculate\+Bias\+Partial\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_layer}{Layer}}}]{next\+Layer}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the partial derivatives of the biases Stores the bias derivatives in bias\+Derivatives. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em next\+Layer} & The next layer in the network \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_layer_a795505dc9418b447ea21a32fdd3f6d82}\index{Layer@{Layer}!calculateHiddenLayerPartialDerivatives@{calculateHiddenLayerPartialDerivatives}}
+\index{calculateHiddenLayerPartialDerivatives@{calculateHiddenLayerPartialDerivatives}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{calculateHiddenLayerPartialDerivatives()}{calculateHiddenLayerPartialDerivatives()}}
+{\footnotesize\ttfamily \label{class_layer_a795505dc9418b447ea21a32fdd3f6d82} 
+void Layer\+::calculate\+Hidden\+Layer\+Partial\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_layer}{Layer}}}]{next\+Layer}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the partial derivatives of the weights and biases if this is a hidden layer Stores the weight derivatives in weight\+Derivatives and derivatves needed for future backpropogation in derivatves\+Cost\+Respect\+To\+Outputs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em next\+Layer} & The next layer in the network \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_layer_a52f3f32eada5f08b2430c458bae71dce}\index{Layer@{Layer}!calculateOutputLayerPartialDerivatives@{calculateOutputLayerPartialDerivatives}}
+\index{calculateOutputLayerPartialDerivatives@{calculateOutputLayerPartialDerivatives}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{calculateOutputLayerPartialDerivatives()}{calculateOutputLayerPartialDerivatives()}}
+{\footnotesize\ttfamily \label{class_layer_a52f3f32eada5f08b2430c458bae71dce} 
+void Layer\+::calculate\+Output\+Layer\+Partial\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_cost_function}{Cost\+Function}}}]{cost\+Function}{, }\item[{vector$<$ float $>$}]{expected\+Outputs}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the partial derivatives of the weights and biases if this is an output Stores the weight derivatives in weight\+Derivatives and derivatves needed for future backpropogation in derivatves\+Cost\+Respect\+To\+Outputs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cost\+Function} & The cost function of the network \\
+\hline
+{\em expected\+Outputs} & The expected outputs for the layer \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_layer_a6872ac133c2a0dd1d1900f1d3ba201fb}\index{Layer@{Layer}!calculateOutputs@{calculateOutputs}}
+\index{calculateOutputs@{calculateOutputs}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{calculateOutputs()}{calculateOutputs()}}
+{\footnotesize\ttfamily \label{class_layer_a6872ac133c2a0dd1d1900f1d3ba201fb} 
+vector$<$ float $>$ Layer\+::calculate\+Outputs (\begin{DoxyParamCaption}\item[{vector$<$ float $>$}]{inputs}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the outputs of the layer and stores the inputs, outputs, and activations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em inputs} & The inputs to the layer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The activations of the outputs of the layer 
+\end{DoxyReturn}
+\Hypertarget{class_layer_addbcb8b6fc2f9ce3d943835e2260e210}\index{Layer@{Layer}!getBias@{getBias}}
+\index{getBias@{getBias}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{getBias()}{getBias()}}
+{\footnotesize\ttfamily \label{class_layer_addbcb8b6fc2f9ce3d943835e2260e210} 
+float Layer\+::get\+Bias (\begin{DoxyParamCaption}\item[{int}]{neuron\+Index}{}\end{DoxyParamCaption})}
+
+
+
+Returns the bias of a neuron. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em neuron\+Index} & The index of the neuron \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The bias of the neuron 
+\end{DoxyReturn}
+\Hypertarget{class_layer_a8ad4d21104307850002af86e5c5a82eb}\index{Layer@{Layer}!getNumInputs@{getNumInputs}}
+\index{getNumInputs@{getNumInputs}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{getNumInputs()}{getNumInputs()}}
+{\footnotesize\ttfamily \label{class_layer_a8ad4d21104307850002af86e5c5a82eb} 
+size\+\_\+t Layer\+::get\+Num\+Inputs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Returns the number of inputs to the layer. 
+
+\begin{DoxyReturn}{Returns}
+\+: The number of inputs to the layer 
+\end{DoxyReturn}
+\Hypertarget{class_layer_a776a027145dd7d294da9a25534fdc49d}\index{Layer@{Layer}!getNumOutputs@{getNumOutputs}}
+\index{getNumOutputs@{getNumOutputs}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{getNumOutputs()}{getNumOutputs()}}
+{\footnotesize\ttfamily \label{class_layer_a776a027145dd7d294da9a25534fdc49d} 
+size\+\_\+t Layer\+::get\+Num\+Outputs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Returns the number of outputs from the layer. 
+
+\begin{DoxyReturn}{Returns}
+\+: The number of outputs from the layer 
+\end{DoxyReturn}
+\Hypertarget{class_layer_aff1b52025cfa41f7ca74ed0a746b3152}\index{Layer@{Layer}!getWeight@{getWeight}}
+\index{getWeight@{getWeight}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{getWeight()}{getWeight()}}
+{\footnotesize\ttfamily \label{class_layer_aff1b52025cfa41f7ca74ed0a746b3152} 
+float Layer\+::get\+Weight (\begin{DoxyParamCaption}\item[{int}]{neuron\+Index}{, }\item[{int}]{input\+Index}{}\end{DoxyParamCaption})}
+
+
+
+Returns the weight of a neuron. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em neuron\+Index} & The index of the neuron \\
+\hline
+{\em input\+Index} & The index of the weight \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The specified weight of the neuron 
+\end{DoxyReturn}
+\Hypertarget{class_layer_ab16e8af90d373ef8328b246bad815878}\index{Layer@{Layer}!setNeuronBias@{setNeuronBias}}
+\index{setNeuronBias@{setNeuronBias}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{setNeuronBias()}{setNeuronBias()}}
+{\footnotesize\ttfamily \label{class_layer_ab16e8af90d373ef8328b246bad815878} 
+void Layer\+::set\+Neuron\+Bias (\begin{DoxyParamCaption}\item[{int}]{neuron\+Index}{, }\item[{float}]{bias}{}\end{DoxyParamCaption})}
+
+
+
+Sets the bias of a neuron at a specified index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em neuron\+Index} & The index of the neuron \\
+\hline
+{\em bias} & The new bias of the neuron \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_layer_a82150148282b1056daa67dee1d2c0df0}\index{Layer@{Layer}!setNeuronWeight@{setNeuronWeight}}
+\index{setNeuronWeight@{setNeuronWeight}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{setNeuronWeight()}{setNeuronWeight()}}
+{\footnotesize\ttfamily \label{class_layer_a82150148282b1056daa67dee1d2c0df0} 
+void Layer\+::set\+Neuron\+Weight (\begin{DoxyParamCaption}\item[{int}]{neuron\+Index}{, }\item[{int}]{input\+Index}{, }\item[{float}]{weight}{}\end{DoxyParamCaption})}
+
+
+
+Sets the weight of a neuron at a specified index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em neuron\+Index} & The index of the neuron \\
+\hline
+{\em input\+Index} & The index of the weight \\
+\hline
+{\em weight} & The new weight of the neuron \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_layer_a2ed19581f2251ce5f8bc08584cd7e19f}\index{Layer@{Layer}!toString@{toString}}
+\index{toString@{toString}!Layer@{Layer}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily \label{class_layer_a2ed19581f2251ce5f8bc08584cd7e19f} 
+string Layer\+::to\+String (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Returns a string representation of the layer. 
+
+\begin{DoxyReturn}{Returns}
+\+: A string representation of the layer 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/Layer.\+h\item 
+src/Layer.\+cpp\end{DoxyCompactItemize}

@@ -27,7 +27,7 @@ private:
     vector<float> previousInputs;
     vector<float> previousOutputs;
     vector<float> previousActivations;
-    vector<float> derivatvesCostRespectToOutputs;
+    vector<float> derivativesCostRespectToOutputs;
     vector<vector<float>> weightDerivatives;
     vector<float> biasDerivatives;
 

@@ -13,9 +13,7 @@
 #include "EvaluationFunctions.h"
 
 
-/**
- * Constructor
-*/
+
 VisualizeClassification::VisualizeClassification(int (*eval_function)(float, float), Network network) : VisualizeClassification(eval_function, network, 1000, 300) {
 }   
 
@@ -147,7 +145,8 @@ void VisualizeClassification::classifyPointsTransparently(){
         for (int y = 1; y < screen_size_y; y++){
             float scaled_x = x / screen_size_x * max_value;
             float scaled_y = (screen_size_y - y) / screen_size_y * max_value;
-            graph.setPixel(x, y, transparentColors[network.classify(std::vector<float>{scaled_x, scaled_y})]);
+            int prediction = network.classify(std::vector<float>{scaled_x, scaled_y});
+            graph.setPixel(x, y, transparentColors[prediction]);
         }
     }
     sf::Texture texture;
@@ -218,8 +217,8 @@ int main(int argc, char** argv)
     // Create the network
     Layer layerOne(2, 16, tanH);
     Layer layerTwo(16, 16, tanH);
-    Layer layerFour(16, numberOfClasses, sigmoid);
-    Network network(vector<Layer>{layerOne, layerTwo, layerFour}, LEARN_RATE, EPOCHS_PER_DECAY, BATCH_SIZE);
+    Layer layerThree(16, numberOfClasses, sigmoid);
+    Network network(vector<Layer>{layerOne, layerTwo, layerThree}, LEARN_RATE, EPOCHS_PER_DECAY, BATCH_SIZE);
 
     // Initialize the Visualizer and run the main loop
     VisualizeClassification visualizer(evalFunction, network, NUM_POINTS, SCREEN_SIZE, MAX_POINT_VALUE);

@@ -1,0 +1,48 @@
+\doxysection{Visualize\+Classification.\+h}
+\hypertarget{_visualize_classification_8h_source}{}\label{_visualize_classification_8h_source}\index{include/VisualizeClassification.h@{include/VisualizeClassification.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ VISUALIZE\_CLASSIFICATION\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ VISUALIZE\_CLASSIFICATION\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Network.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_visualize_classification}{VisualizeClassification}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{int}\ num\_points;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ number\ of\ data\ points}}
+\DoxyCodeLine{00014\ \ \ \ \ std::vector<std::vector<float>>\ inputs;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ input\ values\ of\ data\ points}}
+\DoxyCodeLine{00015\ \ \ \ \ std::vector<int>\ outputs;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ outputs\ of\ data\ points\ from\ eval\ function}}
+\DoxyCodeLine{00016\ \ \ \ \ std::vector<std::vector<float>>\ vectorizedOutputs;\ \ \ \ \ \textcolor{comment}{//\ outputs\ of\ data\ points\ from\ eval\ function}}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{float}\ max\_value;\ \ \ \ \ \ \textcolor{comment}{//\ maximum\ value\ of\ x\ and\ y}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ Colors\ for\ each\ output}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{const}\ sf::Color\ colors[8]\ =\ \{sf::Color::Green,\ sf::Color::Red,\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sf::Color::Blue,\ sf::Color::Yellow,\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sf::Color::Magenta,\ sf::Color::Cyan,\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sf::Color::White,\ sf::Color::Black\};}
+\DoxyCodeLine{00023\ \ \ \ \ sf::Color\ transparentColors[8];\ \ \ \ \ \textcolor{comment}{//\ transparent\ versions\ of\ the\ colors}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{float}\ screen\_size\_x;\ \ \ \ \ \ \ \textcolor{comment}{//\ size\ of\ the\ screen\ in\ x\ direction}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ screen\_size\_y;\ \ \ \ \ \ \ \textcolor{comment}{//\ size\ of\ the\ screen\ in\ y\ direction}}
+\DoxyCodeLine{00027\ \ \ \ \ sf::RenderWindow\ window;\ \ \ \ \textcolor{comment}{//\ window\ to\ draw\ to}}
+\DoxyCodeLine{00028\ \ \ \ \ int\ (*eval\_function)(float,\ float);\ \ \ \textcolor{comment}{//\ function\ to\ generate\ outputs}}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_network}{Network}}\ network;\ \ \ \textcolor{comment}{//\ network\ to\ generate\ outputs}}
+\DoxyCodeLine{00030\ \ \ \ \ std::chrono::time\_point<std::chrono::system\_clock>\ start\_time;\ \ \textcolor{comment}{//\ time\ when\ the\ visualization\ started}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_visualize_classification_afb097b0f229ace5075332b967e320d3d}{VisualizeClassification}}(\textcolor{keywordtype}{int}\ (*eval\_function)(\textcolor{keywordtype}{float},\ \textcolor{keywordtype}{float}),\ \mbox{\hyperlink{class_network}{Network}}\ network);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{class_visualize_classification_afb097b0f229ace5075332b967e320d3d}{VisualizeClassification}}(\textcolor{keywordtype}{int}\ (*eval\_function)(\textcolor{keywordtype}{float},\ \textcolor{keywordtype}{float}),\ \mbox{\hyperlink{class_network}{Network}}\ network,\ \textcolor{keywordtype}{int}\ num\_points,\ \textcolor{keywordtype}{int}\ screen\_size,\ \textcolor{keywordtype}{float}\ max\_value\ =\ 10);}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_visualize_classification_ad7ac56238e591fc3368742aa3e212d17}{initializeTransparentColors}}();}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_visualize_classification_a492442a374f6c734b4307cd0596d1891}{generateRandomData}}();}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_visualize_classification_ae55b46905d0e53418b8eef813ce0166a}{generateOutputs}}();}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_visualize_classification_ac506b22f1fca2d319f986eab0e218640}{classifyPointsTransparently}}();}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_visualize_classification_a4c461586055b2409730a8900515314d3}{drawPoints}}();}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_visualize_classification_a569f5b87235f46c62681bfe17fd372f4}{runMainLoop}}();}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_visualize_classification_aa7fdc6cbd88e076f5f4110bf3db2e6c3}{showNetworkInfo}}();}
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ VISUALIZE\_CLASSIFICATION\_H}}
+
+\end{DoxyCode}

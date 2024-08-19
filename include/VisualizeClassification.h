@@ -30,7 +30,20 @@ private:
     std::chrono::time_point<std::chrono::system_clock> start_time;  // time when the visualization started
 
 public:
+    /**
+     * Constructor
+    */
     VisualizeClassification(int (*eval_function)(float, float), Network network);
+
+    /**
+     * Constructor for class VisualizeClassification
+     * @param eval_function: function to cassify points
+     * @param network: network learning classify points
+     * @param num_points: number of data points to create and classify
+     * @param screen_size: size of the screen to draw to
+     * @param max_value: maximum value of x and y for data points
+     * 
+    */
     VisualizeClassification(int (*eval_function)(float, float), Network network, int num_points, int screen_size, float max_value = 10);
     void initializeTransparentColors();
     void generateRandomData();

@@ -4,9 +4,10 @@
 #include <fstream>
 #include <sstream>
 #include "CSVReader.h"
+#include <string>
+#include <vector>
 
 using namespace std;
-
 /**
  * Reads a CSV file and returns a vector of vectors of floats
  * @param fileName: The name of the file to read
@@ -14,9 +15,9 @@ using namespace std;
  * @param endColumn: The column to stop reading at
  * @return: A vector of vectors of floats
 */
-vector<vector<float>> CSVReader::readfloatRows(string fileName, int startColumn, int endColumn, int startRow, int endRow){
+vector<vector<int>> readIntRows(string fileName, int startColumn, int endColumn, int startRow, int endRow){
     ifstream file(fileName);
-    vector<vector<float>> rows;
+    vector<vector<int>> rows;
     string line;
     int rowNumber = 0;
     while(getline(file, line) && rowNumber <= endRow){
@@ -24,13 +25,13 @@ vector<vector<float>> CSVReader::readfloatRows(string fileName, int startColumn,
             rowNumber++;
             continue;
         }
-        vector<float> row;
+        vector<int> row;
         stringstream ss(line);
         string cell;
         int column = 0;
         while(getline(ss, cell, ',')){
             if(column >= startColumn){
-                row.push_back(stod(cell));
+                row.push_back(stoi(cell));
                 if(column == endColumn){
                     break;
                 }
@@ -49,9 +50,9 @@ vector<vector<float>> CSVReader::readfloatRows(string fileName, int startColumn,
  * @param columnIndex: The column to read from
  * @return: A vector of ints
 */
-vector<float> CSVReader::readfloatColumn(string fileName, int columnIndex, int startRow, int endRow){
+vector<int> readIntColumn(string fileName, int columnIndex, int startRow, int endRow){
     ifstream file(fileName);
-    vector<float> column;
+    vector<int> column;
     string line;
     int rowNumber = 0;
     while(getline(file, line) && rowNumber <= endRow){
@@ -64,7 +65,7 @@ vector<float> CSVReader::readfloatColumn(string fileName, int columnIndex, int s
         int columnNumber = 0;
         while(getline(ss, cell, ',')){
             if(columnNumber == columnIndex){
-                column.push_back(stof(cell));
+                column.push_back(stoi(cell));
                 break;
             }
             columnNumber++;
@@ -80,7 +81,7 @@ vector<float> CSVReader::readfloatColumn(string fileName, int columnIndex, int s
  * @param max: The maximum value to normalize to
  * @return: The normalized data
 */
-vector<vector<float>> CSVReader::normalize(vector<vector<float>> data, float max){
+vector<vector<float>> normalize(vector<vector<int>> data, int max){
     vector<vector<float>> normalizedData;
     for(int i = 0; i < data.size(); i++){
         vector<float> row;
@@ -98,7 +99,7 @@ vector<vector<float>> CSVReader::normalize(vector<vector<float>> data, float max
  * @param numClasses: The number of classes
  * @return: The vectorized outputs
 */
-vector<vector<float>> CSVReader::vectorizeOutputs(vector<float> outputs, int numClasses){
+vector<vector<float>> vectorizeOutputs(vector<int> outputs, int numClasses){
     vector<vector<float>> vectorizedOutputs;
     for(int i = 0; i < outputs.size(); i++){
         vector<float> vectorizedOutput;

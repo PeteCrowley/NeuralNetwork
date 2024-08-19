@@ -1,0 +1,93 @@
+\doxysection{Evaluation\+Functions Class Reference}
+\hypertarget{class_evaluation_functions}{}\label{class_evaluation_functions}\index{EvaluationFunctions@{EvaluationFunctions}}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_evaluation_functions_ab9d3edf5f43e2a322b1bf8fa641b798f}\label{class_evaluation_functions_ab9d3edf5f43e2a322b1bf8fa641b798f} 
+static int {\bfseries three\+\_\+linear\+\_\+sections} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Divides the data points into three linear sections on the screen Recommended MAX\+\_\+\+POINT\+\_\+\+VALUE\+: 5-\/10 Number of classes\+: 3. \end{DoxyCompactList}\item 
+\Hypertarget{class_evaluation_functions_a32535ae6e9fac29baa7e88408faf24f6}\label{class_evaluation_functions_a32535ae6e9fac29baa7e88408faf24f6} 
+static int {\bfseries four\+\_\+squares} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Divides the data points into four square sections Recommended MAX\+\_\+\+POINT\+\_\+\+VALUE\+: 10 Number of classes\+: 4. \end{DoxyCompactList}\item 
+\Hypertarget{class_evaluation_functions_ace333ddd59cc164824f6a8c858369059}\label{class_evaluation_functions_ace333ddd59cc164824f6a8c858369059} 
+static int {\bfseries cubic\+\_\+function} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Seperates data via a cubic function Recommended MAX\+\_\+\+POINT\+\_\+\+VALUE\+: 1 Number of classes\+: 2. \end{DoxyCompactList}\item 
+\Hypertarget{class_evaluation_functions_adf9bf9718608f24960041a160bc4790f}\label{class_evaluation_functions_adf9bf9718608f24960041a160bc4790f} 
+static int {\bfseries quadratic\+\_\+function} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Seperates the data points via a quadtaric function Recommended MAX\+\_\+\+POINT\+\_\+\+VALUE\+: 1 Number of classes\+: 2. \end{DoxyCompactList}\item 
+\Hypertarget{class_evaluation_functions_a674fd4603669733f9efa01e4849c26cd}\label{class_evaluation_functions_a674fd4603669733f9efa01e4849c26cd} 
+static int {\bfseries circle\+\_\+function} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Divides the data points based on whether they are inside a circle Recommended MAX\+\_\+\+POINT\+\_\+\+VALUE\+: 10 Number of classes\+: 2. \end{DoxyCompactList}\item 
+\Hypertarget{class_evaluation_functions_a2097eaf1c3c579b940748405bc3bcf8b}\label{class_evaluation_functions_a2097eaf1c3c579b940748405bc3bcf8b} 
+static int {\bfseries three\+\_\+class\+\_\+circle} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Seperates the data points into 3 classes based on distance from the center Recommended MAX\+\_\+\+POINT\+\_\+\+VALUE\+: 10 Number of classes\+: 3. \end{DoxyCompactList}\item 
+\Hypertarget{class_evaluation_functions_af2b69b6c28f3c525bdd39058f16b75b3}\label{class_evaluation_functions_af2b69b6c28f3c525bdd39058f16b75b3} 
+static int {\bfseries four\+\_\+class\+\_\+circle} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Seperates the data points into 4 classes based on distance from the center Recommended MAX\+\_\+\+POINT\+\_\+\+VALUE\+: 10 Number of classes\+: 4. \end{DoxyCompactList}\item 
+\Hypertarget{class_evaluation_functions_a6e27f1fb8bfd6ee00e9005bf11ab44e2}\label{class_evaluation_functions_a6e27f1fb8bfd6ee00e9005bf11ab44e2} 
+static int {\bfseries tanh\+\_\+function} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Seperates the data points via a tanh function Recommended MAX\+\_\+\+POINT\+\_\+\+VALUE\+: 10 Number of classes\+: 2. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const std\+::map$<$ std\+::string, Eval\+Function\+Ptr $>$ \mbox{\hyperlink{class_evaluation_functions_a27612854da4191059292d4b880706518}{function\+\_\+map}}
+\begin{DoxyCompactList}\small\item\em Map of evaluation function names to function pointers. \end{DoxyCompactList}\item 
+static const std\+::map$<$ std\+::string, int $>$ \mbox{\hyperlink{class_evaluation_functions_a4e08e4c2270ded6f539884001eaf0adf}{num\+\_\+classes\+\_\+map}}
+\begin{DoxyCompactList}\small\item\em Map of evaluation function names to number of classes of data points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_evaluation_functions_a27612854da4191059292d4b880706518}\index{EvaluationFunctions@{EvaluationFunctions}!function\_map@{function\_map}}
+\index{function\_map@{function\_map}!EvaluationFunctions@{EvaluationFunctions}}
+\doxysubsubsection{\texorpdfstring{function\_map}{function\_map}}
+{\footnotesize\ttfamily \label{class_evaluation_functions_a27612854da4191059292d4b880706518} 
+const std\+::map$<$ std\+::string, Eval\+Function\+Ptr $>$ Evaluation\+Functions\+::function\+\_\+map\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}linear"{}},\ \mbox{\hyperlink{class_evaluation_functions_ab9d3edf5f43e2a322b1bf8fa641b798f}{EvaluationFunctions::three\_linear\_sections}}\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}4\_squares"{}},\ \mbox{\hyperlink{class_evaluation_functions_a32535ae6e9fac29baa7e88408faf24f6}{EvaluationFunctions::four\_squares}}\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}cubic"{}},\ \mbox{\hyperlink{class_evaluation_functions_ace333ddd59cc164824f6a8c858369059}{EvaluationFunctions::cubic\_function}}\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}quadratic"{}},\ \mbox{\hyperlink{class_evaluation_functions_adf9bf9718608f24960041a160bc4790f}{EvaluationFunctions::quadratic\_function}}\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}circle"{}},\ \mbox{\hyperlink{class_evaluation_functions_a674fd4603669733f9efa01e4849c26cd}{EvaluationFunctions::circle\_function}}\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}3circles"{}},\ \mbox{\hyperlink{class_evaluation_functions_a2097eaf1c3c579b940748405bc3bcf8b}{EvaluationFunctions::three\_class\_circle}}\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}4circles"{}},\ \mbox{\hyperlink{class_evaluation_functions_af2b69b6c28f3c525bdd39058f16b75b3}{EvaluationFunctions::four\_class\_circle}}\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}tanh"{}},\ \mbox{\hyperlink{class_evaluation_functions_a6e27f1fb8bfd6ee00e9005bf11ab44e2}{EvaluationFunctions::tanh\_function}}\},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Map of evaluation function names to function pointers. 
+
+\Hypertarget{class_evaluation_functions_a4e08e4c2270ded6f539884001eaf0adf}\index{EvaluationFunctions@{EvaluationFunctions}!num\_classes\_map@{num\_classes\_map}}
+\index{num\_classes\_map@{num\_classes\_map}!EvaluationFunctions@{EvaluationFunctions}}
+\doxysubsubsection{\texorpdfstring{num\_classes\_map}{num\_classes\_map}}
+{\footnotesize\ttfamily \label{class_evaluation_functions_a4e08e4c2270ded6f539884001eaf0adf} 
+const std\+::map$<$ std\+::string, int $>$ Evaluation\+Functions\+::num\+\_\+classes\+\_\+map\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}3linear"{}},\ 3\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}4squares"{}},\ 4\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}cubic"{}},\ 2\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}quadratic"{}},\ 2\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}circle"{}},\ 2\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}3circles"{}},\ 3\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}4circles"{}},\ 4\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}tanh"{}},\ 2\},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Map of evaluation function names to number of classes of data points. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/Evaluation\+Functions.\+h\item 
+src/Evaluation\+Functions.\+cpp\end{DoxyCompactItemize}

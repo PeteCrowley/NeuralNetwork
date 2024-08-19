@@ -3,6 +3,7 @@
 #include <random>
 #include "Layer.h"
 #include "ActivationFunction.h"
+#include <omp.h>
 
 using namespace std;
 
@@ -29,7 +30,7 @@ Layer::Layer(int num_inputs, int num_outputs, ActivationFunction activationFunct
     previousInputs = vector<float>(num_inputs);
     previousOutputs = vector<float>(num_outputs);
     previousActivations = vector<float>(num_outputs);
-    derivatvesCostRespectToOutputs = vector<float>(num_outputs);
+    derivativesCostRespectToOutputs = vector<float>(num_outputs);
     resetDerivatives();
 
     // Seed the random number generator
@@ -75,9 +76,7 @@ vector<float> Layer::calculateOutputs(vector<float> inputs){
         outputs[outputIndex] = output;      // add the output to our vector
     }
     previousOutputs = outputs;
-    for(size_t i = 0; i < outputs.size(); i++){
-        outputs[i] = activationFunction.activation(outputs[i]);
-    }
+    outputs = activationFunction.activation(outputs);
     previousActivations = outputs;
     
     return outputs;
@@ -91,15 +90,18 @@ vector<float> Layer::calculateOutputs(vector<float> inputs){
 */
 void Layer::calculateOutputLayerPartialDerivatives(CostFunction costFunction, vector<float> expectedOutputs){
     // Calculate all of the partials of the weights
+    vector<float> activationDerivatives = activationFunction.derivative(previousOutputs);
+    // #pragma omp parallel for
     for(size_t outputIndex = 0; outputIndex<num_outputs; outputIndex++){
         // dc/dz = da/dz * dc/da
-        float dAdz = activationFunction.derivative(previousOutputs[outputIndex]);
+        float dAdz = activationDerivatives[outputIndex];
         float dCda = costFunction.derivative(previousActivations[outputIndex], expectedOutputs[outputIndex]);
-        derivatvesCostRespectToOutputs[outputIndex] = dCda * dAdz;      // store values for future layers
+        derivativesCostRespectToOutputs[outputIndex] = dCda * dAdz;      // store values for future layers
+        // #pragma omp parallel for
         for(size_t inputIndex = 0; inputIndex < num_inputs; inputIndex++){
             // dc/dw = dz/dw * dc/dz
             float dZdw = previousInputs[inputIndex];
-            float deriv = dZdw * derivatvesCostRespectToOutputs[outputIndex];
+            float deriv = dZdw * derivativesCostRespectToOutputs[outputIndex];
             weightDerivatives[outputIndex][inputIndex] += deriv;
         }
     }
@@ -114,20 +116,23 @@ void Layer::calculateOutputLayerPartialDerivatives(CostFunction costFunction, ve
 void Layer::calculateHiddenLayerPartialDerivatives(Layer nextLayer)
 {
     // Calculate all of the partials of the weights
+    vector<float> activationDerivatives = activationFunction.derivative(previousOutputs);
+    // #pragma omp parallel for
     for(size_t outputIndex = 0; outputIndex<num_outputs; outputIndex++){
         // dc/dz = da/dz * (dZnext/da * dc/dznext) for each neuron in next leyar
-        float dAdz = activationFunction.derivative(previousOutputs[outputIndex]);
+        float dAdz = activationDerivatives[outputIndex];
         float dCdznext = 0;
         for (size_t nextNeuronIndex = 0; nextNeuronIndex < nextLayer.getNumOutputs(); nextNeuronIndex++){
-            dCdznext += nextLayer.getWeight(nextNeuronIndex, outputIndex) * nextLayer.derivatvesCostRespectToOutputs[nextNeuronIndex];
+            dCdznext += nextLayer.getWeight(nextNeuronIndex, outputIndex) * nextLayer.derivativesCostRespectToOutputs[nextNeuronIndex];
         }
-        derivatvesCostRespectToOutputs[outputIndex] = dAdz * dCdznext;          // store values for future layers
+        derivativesCostRespectToOutputs[outputIndex] = dAdz * dCdznext;          // store values for future layers
+        // #pragma omp parallel for
         for(size_t inputIndex = 0; inputIndex < num_inputs; inputIndex++){
             // dc/dw1 = dw1/dz1 * da1/dz1 * dz2/da1 * da2/dz2 * dc/da2
             // dc/dw1 = dw1/dz1 * da1/dz1 * dz2/da1 * dc/daz2
             // dc/dw = dz/dw * dc/dz
             float dZdw = previousInputs[inputIndex];
-            float deriv = dZdw * derivatvesCostRespectToOutputs[outputIndex];
+            float deriv = dZdw * derivativesCostRespectToOutputs[outputIndex];
             weightDerivatives[outputIndex][inputIndex] += deriv;
         }
     }
@@ -143,7 +148,7 @@ void Layer::calculateBiasPartialDerivatives(Layer nextLayer)
     for (size_t outputIndex = 0; outputIndex < num_outputs; outputIndex++){
         // dc/db = dz/db * dc/dz
         // float dZdb = 1;
-        biasDerivatives[outputIndex] += derivatvesCostRespectToOutputs[outputIndex];
+        biasDerivatives[outputIndex] += derivativesCostRespectToOutputs[outputIndex];
     }
 }
 

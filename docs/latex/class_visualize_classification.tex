@@ -1,0 +1,75 @@
+\doxysection{Visualize\+Classification Class Reference}
+\hypertarget{class_visualize_classification}{}\label{class_visualize_classification}\index{VisualizeClassification@{VisualizeClassification}}
+
+
+This is a class used to visualize the process of neural networks learning to classify points.  
+
+
+
+
+{\ttfamily \#include $<$Visualize\+Classification.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_visualize_classification_afb097b0f229ace5075332b967e320d3d}\label{class_visualize_classification_afb097b0f229ace5075332b967e320d3d} 
+{\bfseries Visualize\+Classification} (int(\texorpdfstring{$\ast$}{*}eval\+\_\+function)(float, float), \mbox{\hyperlink{class_network}{Network}} network)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_visualize_classification_af1c1d7543afc084a8d066fa72e62693a}{Visualize\+Classification}} (int(\texorpdfstring{$\ast$}{*}eval\+\_\+function)(float, float), \mbox{\hyperlink{class_network}{Network}} network, int num\+\_\+points, int screen\+\_\+size, float max\+\_\+value=10)
+\begin{DoxyCompactList}\small\item\em Constructor for class \doxylink{class_visualize_classification}{Visualize\+Classification}. \end{DoxyCompactList}\item 
+\Hypertarget{class_visualize_classification_ad7ac56238e591fc3368742aa3e212d17}\label{class_visualize_classification_ad7ac56238e591fc3368742aa3e212d17} 
+void {\bfseries initialize\+Transparent\+Colors} ()
+\begin{DoxyCompactList}\small\item\em Initializes the transparent colors to be used later. \end{DoxyCompactList}\item 
+\Hypertarget{class_visualize_classification_a492442a374f6c734b4307cd0596d1891}\label{class_visualize_classification_a492442a374f6c734b4307cd0596d1891} 
+void {\bfseries generate\+Random\+Data} ()
+\begin{DoxyCompactList}\small\item\em Generates random data points for the class. \end{DoxyCompactList}\item 
+\Hypertarget{class_visualize_classification_ae55b46905d0e53418b8eef813ce0166a}\label{class_visualize_classification_ae55b46905d0e53418b8eef813ce0166a} 
+void {\bfseries generate\+Outputs} ()
+\begin{DoxyCompactList}\small\item\em Generates the outputs for the data points. \end{DoxyCompactList}\item 
+\Hypertarget{class_visualize_classification_ac506b22f1fca2d319f986eab0e218640}\label{class_visualize_classification_ac506b22f1fca2d319f986eab0e218640} 
+void {\bfseries classify\+Points\+Transparently} ()
+\begin{DoxyCompactList}\small\item\em Classifies the points with a transparent mask over the screen. \end{DoxyCompactList}\item 
+\Hypertarget{class_visualize_classification_a4c461586055b2409730a8900515314d3}\label{class_visualize_classification_a4c461586055b2409730a8900515314d3} 
+void {\bfseries draw\+Points} ()
+\begin{DoxyCompactList}\small\item\em Draws the points to the screen. \end{DoxyCompactList}\item 
+\Hypertarget{class_visualize_classification_a569f5b87235f46c62681bfe17fd372f4}\label{class_visualize_classification_a569f5b87235f46c62681bfe17fd372f4} 
+void {\bfseries run\+Main\+Loop} ()
+\begin{DoxyCompactList}\small\item\em Runs the main loop of the visualization. \end{DoxyCompactList}\item 
+\Hypertarget{class_visualize_classification_aa7fdc6cbd88e076f5f4110bf3db2e6c3}\label{class_visualize_classification_aa7fdc6cbd88e076f5f4110bf3db2e6c3} 
+void {\bfseries show\+Network\+Info} ()
+\begin{DoxyCompactList}\small\item\em Shows the loss and number of epochs on the screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is a class used to visualize the process of neural networks learning to classify points. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_visualize_classification_af1c1d7543afc084a8d066fa72e62693a}\index{VisualizeClassification@{VisualizeClassification}!VisualizeClassification@{VisualizeClassification}}
+\index{VisualizeClassification@{VisualizeClassification}!VisualizeClassification@{VisualizeClassification}}
+\doxysubsubsection{\texorpdfstring{VisualizeClassification()}{VisualizeClassification()}}
+{\footnotesize\ttfamily \label{class_visualize_classification_af1c1d7543afc084a8d066fa72e62693a} 
+Visualize\+Classification\+::\+Visualize\+Classification (\begin{DoxyParamCaption}\item[{int(\texorpdfstring{$\ast$}{*}}]{eval\+\_\+function~}{)(float, float), }\item[{\mbox{\hyperlink{class_network}{Network}}}]{network}{, }\item[{int}]{num\+\_\+points}{, }\item[{int}]{screen\+\_\+size}{, }\item[{float}]{max\+\_\+value}{ = {\ttfamily 10}}\end{DoxyParamCaption})}
+
+
+
+Constructor for class \doxylink{class_visualize_classification}{Visualize\+Classification}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em eval\+\_\+function} & function to cassify points \\
+\hline
+{\em network} & network learning classify points \\
+\hline
+{\em num\+\_\+points} & number of data points to create and classify \\
+\hline
+{\em screen\+\_\+size} & size of the screen to draw to \\
+\hline
+{\em max\+\_\+value} & maximum value of x and y for data points \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/Visualize\+Classification.\+h\item 
+src/Visualize\+Classification.\+cpp\end{DoxyCompactItemize}
