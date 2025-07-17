@@ -6,10 +6,9 @@ This project is a neural network coded from scratch in C++. It visualizes the le
 2. OpenMP
 
 ## Examples
+https://github.com/user-attachments/assets/5c82bc6d-efb3-4617-b40c-f4792ee6d0a8
 
-https://github.com/user-attachments/assets/e18906e3-be5e-4065-9a48-daa5bf29f9ce
+https://github.com/user-attachments/assets/3b86569e-a184-40c0-a4be-9fcdd8cb9a7e
 
-https://github.com/user-attachments/assets/8b4ed330-6498-4283-b0b8-98ceff270672
-
-https://github.com/user-attachments/assets/0c326b26-afea-4c4f-838d-96ba86ff31ac
+https://github.com/user-attachments/assets/1199349b-af97-431b-9a5e-46ec98cd76a9
 
