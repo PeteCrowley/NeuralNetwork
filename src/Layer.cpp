@@ -4,6 +4,7 @@
 #include "Layer.h"
 #include "ActivationFunction.h"
 #include <omp.h>
+#include <math.h>
 
 using namespace std;
 
@@ -38,15 +39,16 @@ Layer::Layer(int num_inputs, int num_outputs, ActivationFunction activationFunct
         srandom(time(NULL));
         seeded = true;
     }
-    
+
+    float window_factor = sqrt(6.0 / (num_inputs + num_outputs));
     // Initialize the weights and biases to random values                   
     for (int outputIndex = 0; outputIndex < num_outputs; outputIndex++)
     {
-        float randomBias = ((float)random() / RAND_MAX) * 2 - 1;   // Random bias
+        float randomBias = ((float)random() / RAND_MAX) * 2 * window_factor - window_factor;   // Random bias
         vector<float> neuron_weights;
         for (int inputIndex = 0; inputIndex < num_inputs; inputIndex++)
         {
-            neuron_weights.insert(neuron_weights.end(), (float)random() / RAND_MAX * 2 - 1);     // Random weights
+            neuron_weights.insert(neuron_weights.end(), (float)random() / RAND_MAX * 2 * window_factor - window_factor);     // Random weights
         }
         weights.push_back(neuron_weights);
         biases.push_back(randomBias);
@@ -89,17 +91,49 @@ vector<float> Layer::calculateOutputs(vector<float> inputs){
  * @param expectedOutputs: The expected outputs for the layer
 */
 void Layer::calculateOutputLayerPartialDerivatives(CostFunction costFunction, vector<float> expectedOutputs){
-    // Calculate all of the partials of the weights
+    if (activationFunction.activation == softmax.activation) {
+        if (costFunction.cost == crossEntropy.cost) {
+            for (size_t outputIndex = 0; outputIndex < num_outputs; outputIndex++) {
+                // For softmax + cross-entropy: dC/dz = a - y.
+                derivativesCostRespectToOutputs[outputIndex] = previousActivations[outputIndex] - expectedOutputs[outputIndex];
+
+                for(size_t inputIndex = 0; inputIndex < num_inputs; inputIndex++){
+                    float dZdw = previousInputs[inputIndex];
+                    float deriv = dZdw * derivativesCostRespectToOutputs[outputIndex];
+                    weightDerivatives[outputIndex][inputIndex] += deriv;
+                }
+            }
+            return;
+        }
+
+        vector<float> dCda(num_outputs);
+        float dotProduct = 0.0f;
+
+        for (size_t outputIndex = 0; outputIndex < num_outputs; outputIndex++) {
+            dCda[outputIndex] = costFunction.derivative(previousActivations[outputIndex], expectedOutputs[outputIndex]);
+            dotProduct += dCda[outputIndex] * previousActivations[outputIndex];
+        }
+
+        for (size_t outputIndex = 0; outputIndex < num_outputs; outputIndex++) {
+            // dC/dz_i = a_i * (dC/da_i - sum_j(dC/da_j * a_j))
+            derivativesCostRespectToOutputs[outputIndex] = previousActivations[outputIndex] * (dCda[outputIndex] - dotProduct);
+
+            for(size_t inputIndex = 0; inputIndex < num_inputs; inputIndex++){
+                float dZdw = previousInputs[inputIndex];
+                float deriv = dZdw * derivativesCostRespectToOutputs[outputIndex];
+                weightDerivatives[outputIndex][inputIndex] += deriv;
+            }
+        }
+        return;
+    }
+
+    // Generic element-wise activation derivative path (sigmoid, tanh, relu, etc.)
     vector<float> activationDerivatives = activationFunction.derivative(previousOutputs);
-    // #pragma omp parallel for
     for(size_t outputIndex = 0; outputIndex<num_outputs; outputIndex++){
-        // dc/dz = da/dz * dc/da
         float dAdz = activationDerivatives[outputIndex];
         float dCda = costFunction.derivative(previousActivations[outputIndex], expectedOutputs[outputIndex]);
-        derivativesCostRespectToOutputs[outputIndex] = dCda * dAdz;      // store values for future layers
-        // #pragma omp parallel for
+        derivativesCostRespectToOutputs[outputIndex] = dCda * dAdz;
         for(size_t inputIndex = 0; inputIndex < num_inputs; inputIndex++){
-            // dc/dw = dz/dw * dc/dz
             float dZdw = previousInputs[inputIndex];
             float deriv = dZdw * derivativesCostRespectToOutputs[outputIndex];
             weightDerivatives[outputIndex][inputIndex] += deriv;

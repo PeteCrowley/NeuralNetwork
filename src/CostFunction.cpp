@@ -1,4 +1,5 @@
 #include "CostFunction.h"
+#include <math.h>
 
 /**
  * Default constructor for CostFunction
@@ -39,3 +40,36 @@ float errorSquaredDeriv(float output, float expectedOutput){
 }
 
 CostFunction errorSquared = CostFunction(errorSquaredCost, errorSquaredDeriv);
+
+/**
+ * Calculates the (per-class) cross entropy cost contribution.
+ * Expected output is assumed to be one-hot or probability target.
+*/
+float crossEntropyCost(float output, float expectedOutput){
+    const float epsilon = 1e-7f;
+    float clampedOutput = output;
+    if (clampedOutput < epsilon) {
+        clampedOutput = epsilon;
+    }
+    if (clampedOutput > 1.0f - epsilon) {
+        clampedOutput = 1.0f - epsilon;
+    }
+    return -expectedOutput * log(clampedOutput);
+}
+
+/**
+ * Derivative of (per-class) cross entropy w.r.t. activation output.
+*/
+float crossEntropyDeriv(float output, float expectedOutput){
+    const float epsilon = 1e-7f;
+    float clampedOutput = output;
+    if (clampedOutput < epsilon) {
+        clampedOutput = epsilon;
+    }
+    if (clampedOutput > 1.0f - epsilon) {
+        clampedOutput = 1.0f - epsilon;
+    }
+    return -expectedOutput / clampedOutput;
+}
+
+CostFunction crossEntropy = CostFunction(crossEntropyCost, crossEntropyDeriv);

@@ -27,7 +27,7 @@ VisualizeClassification::VisualizeClassification(int (*eval_function)(float, flo
  * 
 */
 VisualizeClassification::VisualizeClassification(int (*eval_function)(float, float), Network network, int num_points, int screen_size, float max_value)
-    : window(sf::VideoMode(screen_size, screen_size), "Classification Visualization") {
+    : window(sf::VideoMode(sf::Vector2u(screen_size, screen_size)), "Classification Visualization") {
     this->num_points = num_points;
     this->eval_function = eval_function;
     this->network = network;
@@ -64,20 +64,19 @@ void VisualizeClassification::runMainLoop(){
 
     while (window.isOpen())
     {
-        sf::Event event;
-        while (window.pollEvent(event))
+        while (auto event = window.pollEvent())
         {
-            if (event.type == sf::Event::Closed)
+            if (event->is<sf::Event::Closed>())
                 window.close();
-                
         }
+
         window.clear();
         network.learnWithBatchSize(inputs, vectorizedOutputs);
-        VisualizeClassification::classifyPointsTransparently();
-        VisualizeClassification::drawPoints();
-        VisualizeClassification::showNetworkInfo();
+        classifyPointsTransparently();
+        drawPoints();
+        showNetworkInfo();
         window.display();
-    }
+    }   
 }
 
 /**
@@ -94,7 +93,7 @@ void VisualizeClassification::generateRandomData(){
 */
 void VisualizeClassification::showNetworkInfo(){
     sf::Font font;
-    if(!font.loadFromFile("fonts/calibri.ttf")){
+    if(!font.openFromFile("fonts/calibri.ttf")){
         cout << "Font not loaded" << endl;
         return;
     }
@@ -108,15 +107,14 @@ void VisualizeClassification::showNetworkInfo(){
         secondsCount = 0;
     }
     
-    sf::Text loss;
-    loss.setFont(font);
+    sf::Text loss(font);
     loss.setString("Epoch: " + std::to_string(numEpochs)
                     + "\nLoss: " + std::to_string(network.averageCost(network.getOutputs(inputs), vectorizedOutputs))
                     + "\nAccuracy: " + std::to_string(network.accuracy(inputs, outputs))
                     + "\nTime: " + std::to_string(secondsCount) + " sec");
     loss.setCharacterSize(15);
     loss.setFillColor(sf::Color::White);
-    loss.setPosition(10, 10);
+    loss.setPosition({10.f, 10.f});
     window.draw(loss);
 
 
@@ -138,7 +136,7 @@ void VisualizeClassification::generateOutputs(){
 */
 void VisualizeClassification::classifyPointsTransparently(){
     sf::Image graph;
-    graph.create(screen_size_x, screen_size_y, sf::Color::Transparent);
+    graph.resize(sf::Vector2u(static_cast<unsigned int>(screen_size_x), static_cast<unsigned int>(screen_size_y)), sf::Color::Transparent);
     // Parallelize the nested loops
     #pragma omp parallel for collapse(2) schedule(dynamic)
     for (int x = 1; x < screen_size_x; x++){
@@ -146,13 +144,14 @@ void VisualizeClassification::classifyPointsTransparently(){
             float scaled_x = x / screen_size_x * max_value;
             float scaled_y = (screen_size_y - y) / screen_size_y * max_value;
             int prediction = network.classify(std::vector<float>{scaled_x, scaled_y});
-            graph.setPixel(x, y, transparentColors[prediction]);
+            graph.setPixel(sf::Vector2u(static_cast<unsigned int>(x), static_cast<unsigned int>(y)), transparentColors[prediction]);
         }
     }
     sf::Texture texture;
-    texture.loadFromImage(graph);
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
+    if (!texture.loadFromImage(graph)) {
+        return;
+    }
+    sf::Sprite sprite(texture);
     window.draw(sprite);
 }
 
@@ -162,7 +161,7 @@ void VisualizeClassification::classifyPointsTransparently(){
 void VisualizeClassification::drawPoints(){
     for (int i = 0; i < num_points; i++){
         sf::CircleShape point(1);
-        point.setPosition(inputs[i][0] * screen_size_x / max_value, screen_size_y - inputs[i][1] * screen_size_y / max_value);
+        point.setPosition({inputs[i][0] * screen_size_x / max_value, screen_size_y - inputs[i][1] * screen_size_y / max_value});
         point.setFillColor(colors[outputs[i]]);
         window.draw(point);
     }
@@ -174,10 +173,10 @@ void VisualizeClassification::drawPoints(){
 int main(int argc, char** argv)
 {
     // Hyperparameters
-    float LEARN_RATE = 0.1;
+    float LEARN_RATE = 0.01;
     int EPOCHS_PER_DECAY = 10;
     int BATCH_SIZE = 32;
-    int NUM_POINTS = 10000;
+    int NUM_POINTS = 20000;
     int SCREEN_SIZE = 500;
     float MAX_POINT_VALUE = 10;
     std::string EVAL_FUNCTION_NAME = "3linear";
@@ -215,10 +214,11 @@ int main(int argc, char** argv)
     int numberOfClasses = EvaluationFunctions::num_classes_map.at(EVAL_FUNCTION_NAME);
 
     // Create the network
-    Layer layerOne(2, 16, tanH);
-    Layer layerTwo(16, 16, tanH);
-    Layer layerThree(16, numberOfClasses, sigmoid);
-    Network network(vector<Layer>{layerOne, layerTwo, layerThree}, LEARN_RATE, EPOCHS_PER_DECAY, BATCH_SIZE);
+    Layer layerOne(2, 48, relu);
+    Layer layerTwo(48, 32, relu);
+    Layer layerThree(32, 16, relu);
+    Layer layerFour(16, numberOfClasses, softmax);
+    Network network(vector<Layer>{layerOne, layerTwo, layerThree, layerFour}, LEARN_RATE, EPOCHS_PER_DECAY, BATCH_SIZE, crossEntropy);
 
     // Initialize the Visualizer and run the main loop
     VisualizeClassification visualizer(evalFunction, network, NUM_POINTS, SCREEN_SIZE, MAX_POINT_VALUE);

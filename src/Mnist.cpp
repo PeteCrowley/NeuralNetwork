@@ -54,8 +54,8 @@ int main(int argc, char** argv){
     // Create the network
     Layer layerOne(numberOfInputs, 32, relu);
     Layer layerTwo(32, 32, relu);
-    Layer layerThree(32, numberOfOutputs, relu);
-    Network network(vector<Layer>{layerOne, layerTwo, layerThree}, LEARN_RATE, EPOCHS_PER_DECAY, BATCH_SIZE);
+    Layer layerThree(32, numberOfOutputs, softmax);
+    Network network(vector<Layer>{layerOne, layerTwo, layerThree}, LEARN_RATE, EPOCHS_PER_DECAY, BATCH_SIZE, crossEntropy);
     network.train(normalized_data, vectorizeOutputs(training_labels, numberOfOutputs), 100);
     return 0;
 }

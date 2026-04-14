@@ -1,14 +1,15 @@
 # Compiler
-CXX = clang++
+CXX = /usr/bin/clang++
 
 # Compiler flags
-CXXFLAGS = -std=c++14 -g -O3 -Wall -Xpreprocessor -fopenmp
+CXXFLAGS = -g -O2 -Wall -std=c++17 -Xpreprocessor -fopenmp
 
 # Include directories
-INCLUDES = -Iinclude -I/usr/local/include -I/usr/local/opt/libomp/include
+INCLUDES = -I/opt/homebrew/opt/libomp/include -I/opt/homebrew/cellar/sfml/3.0.2/include -I./include
 
 # Library directories and flags
-LDFLAGS = -L/usr/local/lib -L/usr/local/opt/libomp/lib
+LDFLAGS = -L/opt/homebrew/opt/libomp/lib -L/opt/homebrew/cellar/sfml/3.0.2/lib
+OMP_LIBS = -lomp
 
 # Source files
 SRCS_VISUAL = src/ActivationFunction.cpp src/CostFunction.cpp src/EvaluationFunctions.cpp src/Layer.cpp src/Network.cpp src/VisualizeClassification.cpp
@@ -28,10 +29,10 @@ all: $(TARGET1) $(TARGET2)
 
 # Link the executable
 $(TARGET1): $(VISUAL_OBJS)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $^ $(LDFLAGS) -lsfml-graphics -lsfml-window -lsfml-system -lomp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $^ $(LDFLAGS) -lsfml-graphics -lsfml-window -lsfml-system $(OMP_LIBS)
 
 $(TARGET2): $(MNIST_OBJS)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $^ $(LDFLAGS) -lomp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $^ $(LDFLAGS) $(OMP_LIBS)
 
 # Compile source files into object files
 %.o: %.cpp

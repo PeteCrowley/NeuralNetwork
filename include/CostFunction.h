@@ -28,5 +28,6 @@ public:
 };
 
 extern CostFunction errorSquared;
+extern CostFunction crossEntropy;
 
 #endif // COST_FUNCTION_H
