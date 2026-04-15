@@ -86,7 +86,7 @@ vector<vector<float>> normalize(vector<vector<int>> data, int max){
     for(int i = 0; i < data.size(); i++){
         vector<float> row;
         for(int j = 0; j < data[i].size(); j++){
-            row.push_back(data[i][j] / max);
+            row.push_back(static_cast<float>(data[i][j]) / static_cast<float>(max));
         }
         normalizedData.push_back(row);
     }

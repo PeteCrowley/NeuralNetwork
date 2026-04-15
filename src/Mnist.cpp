@@ -9,8 +9,28 @@
 #include "EvaluationFunctions.h"
 
 
+static Network* g_network = nullptr;
+static vector<vector<float>> g_test_inputs;
+static vector<int> g_test_labels;
+
+
+void networkUpdateFunction(float loss, float epoch_time, float total_time, int epoch){
+    float test_accuracy = 0.0f;
+    if (g_network != nullptr && !g_test_inputs.empty() && g_test_inputs.size() == g_test_labels.size()) {
+        test_accuracy = g_network->accuracy(g_test_inputs, g_test_labels);
+    }
+
+    cout << "Epoch " + to_string(epoch)
+            + ": loss = " + to_string(loss)
+            + ", test_accuracy = " + to_string(test_accuracy)
+            + ", time for epoch = " + to_string(epoch_time)
+            + ", total time = " + to_string(total_time)
+            << endl;
+}
+
+
 int main(int argc, char** argv){
-        // Hyperparameters
+    // Hyperparameters
     float LEARN_RATE = 0.1;
     int EPOCHS_PER_DECAY = 5;
     int BATCH_SIZE = 64;
@@ -31,31 +51,33 @@ int main(int argc, char** argv){
             return 1;
         }
     }
-    // EvalFunctionPtr evalFunction = EvaluationFunctions::function_map.at(EVAL_FUNCTION_NAME);
-    // int numberOfClasses = EvaluationFunctions::num_classes_map.at(EVAL_FUNCTION_NAME);
 
     int numberOfOutputs = 10;
     int numberOfInputs = 784;
 
     // Load the data
-    vector<int> training_labels = readIntColumn("datasets/mnist_train.csv", 0, 1, 6001);
-    vector<vector<int>> training_data = readIntRows("datasets/mnist_train.csv", 1, 784, 1, 6001);
+    vector<int> training_labels = readIntColumn("datasets/mnist_train.csv", 0, 1, 30001);
+    vector<vector<int>> training_data = readIntRows("datasets/mnist_train.csv", 1, 784, 1, 30001);
     vector<vector<float>> normalized_data = normalize(training_data, 255);
 
-    //Print the data
-    // for (int i = 0; i < 10; i++){
-    //     for (int j = 0; j < 784; j++){
-    //         std::cout << training_data[i][j] << " ";
-    //     }
-    //     std::cout << std::endl;
-    // }
+    vector<int> test_labels = readIntColumn("datasets/mnist_test.csv", 0, 1, 10000);
+    vector<vector<int>> test_data = readIntRows("datasets/mnist_test.csv", 1, 784, 1, 10000);
+    vector<vector<float>> normalized_test_data = normalize(test_data, 255);
 
+    g_test_labels = test_labels;
+    g_test_inputs = normalized_test_data;
 
     // Create the network
     Layer layerOne(numberOfInputs, 32, relu);
     Layer layerTwo(32, 32, relu);
-    Layer layerThree(32, numberOfOutputs, softmax);
-    Network network(vector<Layer>{layerOne, layerTwo, layerThree}, LEARN_RATE, EPOCHS_PER_DECAY, BATCH_SIZE, crossEntropy);
-    network.train(normalized_data, vectorizeOutputs(training_labels, numberOfOutputs), 100);
+    Layer layerThree(32, 16, relu);
+    Layer layerFour(16, numberOfOutputs, softmax);
+    Network network(vector<Layer>{layerOne, layerTwo, layerThree, layerFour}, LEARN_RATE, EPOCHS_PER_DECAY, BATCH_SIZE, crossEntropy);
+    g_network = &network;
+    
+    // network.train(normalized_data, vectorizeOutputs(training_labels, numberOfOutputs), 5, networkUpdateFunction);
+    // network.saveNetwork("Mnist.network");
+    network.loadNetwork("Mnist.network");
+    cout << "Final Test Accuracy: " + to_string(network.accuracy(normalized_test_data, test_labels)) << endl;
     return 0;
 }

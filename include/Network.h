@@ -43,8 +43,14 @@ public:
     void applyDerivatives(int batch_size);
     void learnWithBatchSize(vector<vector<float>> inputs, vector<vector<float>> expected_outputs);
     void train(vector<vector<float>> inputs, vector<vector<float>> expected_outputs, int epochs);
+    void train(vector<vector<float>> inputs, vector<vector<float>> expected_outputs, int epochs, 
+        void (*networkUpdate)(float loss, float epoch_time, float total_time, int epoch));
     vector<float> intToVector(int num);
     int getEpoch();
+    bool saveNetwork(string filename);
+    bool loadNetwork(string filename);
 };
+
+
 
 #endif // NETWORK_H

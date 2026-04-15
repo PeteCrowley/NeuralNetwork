@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
+#include <fstream>
+#include <iomanip>
 #include <omp.h>
 
 using namespace std;
@@ -53,8 +55,8 @@ Network::Network(vector<Layer> layers, float learn_rate, int epochs_per_decay, i
     }
     // Obtain a random seed
     std::random_device rd;
-    // Create a random number generator engine
-    std::mt19937 rng(rd());
+    // Seed the member RNG used for shuffling.
+    this->rng = std::mt19937(rd());
 }
 
 /**
@@ -81,7 +83,6 @@ vector<float> Network:: getOutput(vector<float> inputs){
 */
 vector<vector<float>> Network:: getOutputs(vector<vector<float>> inputs){
     vector<vector<float>> outputs(inputs.size());
-    #pragma omp parallel for
     for(size_t i = 0; i < inputs.size(); i++){
         outputs[i] = this->getOutput(inputs[i]);
     }
@@ -147,7 +148,6 @@ float Network:: averageCost(vector<vector<float>> outputs, vector<vector<float>>
 float Network::accuracy(vector<vector<float>> inputs, vector<int> expected_integer_outputs)
 {
     int total_correct = 0;
-    #pragma omp parallel for reduction(+:total_correct)
     for(size_t i = 0; i < inputs.size(); i++){
         total_correct += this->classify(inputs[i]) == expected_integer_outputs[i];   
     }
@@ -176,7 +176,6 @@ float Network::accuracy(vector<vector<float>> inputs, vector<vector<float>> expe
 */
 void Network::quickLearn(vector<vector<float>> inputs, vector<vector<float>> expected_output)
 {
-    #pragma omp parallel for
     for(size_t i = 0; i < inputs.size(); i++){
         this->updateDerivatives(inputs[i], expected_output[i]);
     }
@@ -264,6 +263,12 @@ void Network::learnWithBatchSize(vector<vector<float>> inputs, vector<vector<flo
 
 }
 
+void defaultNetworkUpdate(float loss, float epoch_time, float total_time, int epoch){
+    cout << "Epoch " + to_string(epoch) + ": " + "loss = " + to_string(loss)
+            + ", time for epoch = " + to_string(epoch_time) 
+            + ", total time = " + to_string(total_time) << endl;
+}
+
 /**
  * Trains the network on a given set of inputs and expected outputs for a given number of epochs
  * @param inputs: The inputs to the network
@@ -272,6 +277,15 @@ void Network::learnWithBatchSize(vector<vector<float>> inputs, vector<vector<flo
 */
 void Network::train(vector<vector<float>> inputs, vector<vector<float>> expected_outputs, int epochs)
 {
+    this->train(inputs, expected_outputs, epochs, defaultNetworkUpdate);
+}
+
+/**
+ * Trains the network on a given set of inputs and expected outputs for a given number of epochs
+ * and calls networkUpdate with progress information after each epoch.
+ */
+void Network::train(vector<vector<float>> inputs, vector<vector<float>> expected_outputs, int epochs, 
+    void (*networkUpdate)(float loss, float epoch_time, float total_time, int epoch)){
     cout << "Training network with " + to_string(epochs) + " epochs" << endl;
     auto global_start = std::chrono::system_clock::now();
     for(int i = 1; i < epochs + 1; i++){
@@ -284,10 +298,8 @@ void Network::train(vector<vector<float>> inputs, vector<vector<float>> expected
         std::chrono::duration<float> globalDiff = end - global_start;
         float globalSecondsCount = globalDiff.count();
 
-        cout << "Epoch " + to_string(i) + ": " + "loss = " + to_string(this->averageCost(this->getOutputs(inputs), expected_outputs))
-                + ", accuracy = " + to_string(this->accuracy(inputs, expected_outputs))
-                + ", time for epoch = " + to_string(secondsCount) 
-                + ", total time = " + to_string(globalSecondsCount) << endl;
+        float loss = this->averageCost(this->getOutputs(inputs), expected_outputs);
+        networkUpdate(loss, secondsCount, globalSecondsCount, i);
     }
 }
 
@@ -324,5 +336,102 @@ string Network::toString(){
     return output;
 }
 
+bool Network::saveNetwork(string filename){
+    std::ofstream out(filename);
+    if (!out.is_open()) {
+        std::cerr << "Error: Could not open file for saving network: " << filename << std::endl;
+        return false;
+    }
+
+    out << std::setprecision(9);
+    out << "NNW1\n";
+    out << num_layers << "\n";
+
+    for (size_t layerIndex = 0; layerIndex < num_layers; layerIndex++) {
+        size_t layerInputs = layers[layerIndex].getNumInputs();
+        size_t layerOutputs = layers[layerIndex].getNumOutputs();
+        out << layerInputs << " " << layerOutputs << "\n";
+
+        for (size_t outputIndex = 0; outputIndex < layerOutputs; outputIndex++) {
+            out << layers[layerIndex].getBias(static_cast<int>(outputIndex));
+            if (outputIndex + 1 < layerOutputs) {
+                out << " ";
+            }
+        }
+        out << "\n";
+
+        for (size_t outputIndex = 0; outputIndex < layerOutputs; outputIndex++) {
+            for (size_t inputIndex = 0; inputIndex < layerInputs; inputIndex++) {
+                out << layers[layerIndex].getWeight(static_cast<int>(outputIndex), static_cast<int>(inputIndex));
+                if (inputIndex + 1 < layerInputs) {
+                    out << " ";
+                }
+            }
+            out << "\n";
+        }
+    }
+
+    return true;
+}
+
+bool Network::loadNetwork(string filename){
+    std::ifstream in(filename);
+    if (!in.is_open()) {
+        std::cerr << "Error: Could not open file for loading network: " << filename << std::endl;
+        return false;
+    }
+
+    std::string magic;
+    in >> magic;
+    if (magic != "NNW1") {
+        std::cerr << "Error: Invalid network file format in " << filename << std::endl;
+        return false;
+    }
+
+    size_t fileNumLayers = 0;
+    in >> fileNumLayers;
+    if (fileNumLayers != num_layers) {
+        std::cerr << "Error: Layer count mismatch when loading network. File has "
+                  << fileNumLayers << " layers, network has " << num_layers << std::endl;
+        return false;
+    }
+
+    for (size_t layerIndex = 0; layerIndex < num_layers; layerIndex++) {
+        size_t fileInputs = 0;
+        size_t fileOutputs = 0;
+        in >> fileInputs >> fileOutputs;
+
+        size_t layerInputs = layers[layerIndex].getNumInputs();
+        size_t layerOutputs = layers[layerIndex].getNumOutputs();
+        if (fileInputs != layerInputs || fileOutputs != layerOutputs) {
+            std::cerr << "Error: Shape mismatch for layer " << layerIndex
+                      << ". File shape is (" << fileInputs << ", " << fileOutputs
+                      << "), network shape is (" << layerInputs << ", " << layerOutputs << ")"
+                      << std::endl;
+            return false;
+        }
+
+        for (size_t outputIndex = 0; outputIndex < layerOutputs; outputIndex++) {
+            float bias = 0.0f;
+            in >> bias;
+            layers[layerIndex].setNeuronBias(static_cast<int>(outputIndex), bias);
+        }
+
+        for (size_t outputIndex = 0; outputIndex < layerOutputs; outputIndex++) {
+            for (size_t inputIndex = 0; inputIndex < layerInputs; inputIndex++) {
+                float weight = 0.0f;
+                in >> weight;
+                layers[layerIndex].setNeuronWeight(static_cast<int>(outputIndex), static_cast<int>(inputIndex), weight);
+            }
+        }
+    }
+
+    if (!in.good() && !in.eof()) {
+        std::cerr << "Error: Failed while parsing network file: " << filename << std::endl;
+        return false;
+    }
+
+    return true;
+}
 
 
