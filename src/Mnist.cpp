@@ -56,8 +56,8 @@ int main(int argc, char** argv){
     int numberOfInputs = 784;
 
     // Load the data
-    vector<int> training_labels = readIntColumn("datasets/mnist_train.csv", 0, 1, 30001);
-    vector<vector<int>> training_data = readIntRows("datasets/mnist_train.csv", 1, 784, 1, 30001);
+    vector<int> training_labels = readIntColumn("datasets/mnist_train.csv", 0, 1, 60001);
+    vector<vector<int>> training_data = readIntRows("datasets/mnist_train.csv", 1, 784, 1, 60001);
     vector<vector<float>> normalized_data = normalize(training_data, 255);
 
     vector<int> test_labels = readIntColumn("datasets/mnist_test.csv", 0, 1, 10000);
@@ -75,9 +75,9 @@ int main(int argc, char** argv){
     Network network(vector<Layer>{layerOne, layerTwo, layerThree, layerFour}, LEARN_RATE, EPOCHS_PER_DECAY, BATCH_SIZE, crossEntropy);
     g_network = &network;
     
-    // network.train(normalized_data, vectorizeOutputs(training_labels, numberOfOutputs), 5, networkUpdateFunction);
-    // network.saveNetwork("Mnist.network");
-    network.loadNetwork("Mnist.network");
-    cout << "Final Test Accuracy: " + to_string(network.accuracy(normalized_test_data, test_labels)) << endl;
+    network.train(normalized_data, vectorizeOutputs(training_labels, numberOfOutputs), 10, networkUpdateFunction);
+    network.saveNetwork("Mnist.network");
+    // network.loadNetwork("Mnist.network");
+    // cout << "Final Test Accuracy: " + to_string(network.accuracy(normalized_test_data, test_labels)) << endl;
     return 0;
 }
